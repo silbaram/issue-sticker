@@ -1,11 +1,36 @@
 import React from 'react';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import {Form, Input, Button, Typography} from 'antd';
+import styled, { css } from 'styled-components';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
+
 
 
 function LoginContainer() {
     const { Title } = Typography;
+
+    const paddingTop = css`
+        padding-top: 13px;
+    `;
+    const commonHeightWidth = css`
+        height: 50px;
+        width: 450px;
+    `;
+    const StyledUserOutlined = styled(UserOutlined)`
+        ${paddingTop}
+    `;
+    const StyledLockOutlined = styled(LockOutlined)`
+        ${paddingTop}
+    `;
+    const StyledButton = styled(Button)`
+        ${commonHeightWidth}
+    `;
+    const StyleInput = styled(Input)`
+        ${commonHeightWidth}
+    `;
+    const StyleInputPassword = styled(Input.Password)`
+        ${commonHeightWidth}
+    `;
 
     return (
         <div style={{ position: "relative", minHeight:200 }}>
@@ -27,8 +52,8 @@ function LoginContainer() {
                             },
                             ]}
                         >
-                            <Input 
-                                prefix={<UserOutlined className="site-form-item-icon" />}
+                            <StyleInput 
+                                prefix={<StyledUserOutlined />}
                                 placeholder="아이디"
                                 style={{ height: 50, width: 450 }}
                             />
@@ -43,17 +68,17 @@ function LoginContainer() {
                             },
                             ]}
                         >
-                            <Input.Password 
-                            prefix={<LockOutlined type="auto" className="site-form-item-icon" />}
+                            <StyleInputPassword
+                                prefix={<StyledLockOutlined />}
                                 placeholder="비밀번호"
                                 style={{ height: 50, width: 450 }}
                             />
                         </Form.Item>
 
                         <Form.Item>
-                            <Button type="primary" htmlType="submit" style={{ height: 50, width: 450 }}>
+                            <StyledButton type="primary" htmlType="submit">
                             Login
-                            </Button>
+                            </StyledButton>
                         </Form.Item>
                     </Form>
                 </div>
