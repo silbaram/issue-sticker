@@ -1,58 +1,69 @@
 import React from 'react';
-import { UserOutlined } from '@ant-design/icons';
-import {Layout, Form, Input, Button, Card} from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import {Form, Input, Button, Typography} from 'antd';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 
 
 function LoginContainer() {
-    const { Header, Footer, Content } = Layout;
+    const { Title } = Typography;
 
     return (
-        <div>
-        <Layout>
-            <Content>
-                <Card title="Login" style={{ width: 500, top: 150 }}>
+        <div style={{ position: "relative", minHeight:200 }}>
+            <div style={{ width: 750, margin: "0 auto", textAlign: "center" }}>
+                <div style={{ position: "relative", paddingTop: 150, boxSizing: 168 }}>
+                    <Title>Issue Sticker</Title>
+                </div>  
+                <div style={{ paddingTop: 50 }}>
                     <Form
                         name="loginForm"
                         initialValues={{ remember: true }}
                     >
                         <Form.Item
-                            label="User Email"
-                            name="username"
+                            name="useremail"
                             rules={[
                             {
                                 required: true,
-                                message: 'Please input your username!',
+                                message: '아이디를 입력해주세요.',
                             },
                             ]}
                         >
                             <Input 
                                 prefix={<UserOutlined className="site-form-item-icon" />}
+                                placeholder="아이디"
+                                style={{ height: 50, width: 450 }}
                             />
                         </Form.Item>
 
                         <Form.Item
-                            label="Password"
                             name="password"
                             rules={[
                             {
                                 required: true,
-                                message: 'Please input your password!',
+                                message: '비밀번호를 입력해주세요.',
                             },
                             ]}
                         >
-                            <Input.Password />
+                            <Input.Password 
+                            prefix={<LockOutlined type="auto" className="site-form-item-icon" />}
+                                placeholder="비밀번호"
+                                style={{ height: 50, width: 450 }}
+                            />
                         </Form.Item>
 
                         <Form.Item>
-                            <Button type="primary" htmlType="submit">
+                            <Button type="primary" htmlType="submit" style={{ height: 50, width: 450 }}>
                             Login
                             </Button>
                         </Form.Item>
                     </Form>
-                </Card>
-            </Content>
-        </Layout>
+                </div>
+                <hr style={{ width: 450 }} />
+                <div>
+                    <Button type="link">아이디 찾기</Button>
+                    <Button type="link">비밀번호 찾기</Button>
+                    <Button type="link">회원가입</Button>
+                </div>
+            </div>
         </div>
     );
 }
