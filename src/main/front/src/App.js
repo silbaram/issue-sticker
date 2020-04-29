@@ -1,11 +1,22 @@
 import React from 'react';
-import LoginContainer from './security/containers/LoginContainer';
-import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import Login from './security/routers/login';
+import Join from './security/routers/join';
+import NotFoundContainer from './common/containers/notFoundContainer'
+
 
 function App() {
-  return (
-    <LoginContainer />
-  );
+
+    return (
+      <BrowserRouter>
+        {/* <Switch> */}
+          <Login />
+          <Join />
+          {/* <Redirect path="*" to="/" /> */}
+          {/* <Route component={NotFoundContainer} /> */}
+        {/* </Switch> */}
+      </BrowserRouter>
+    );
 }
 
 export default App;
