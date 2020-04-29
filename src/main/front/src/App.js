@@ -1,20 +1,29 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import Login from './security/routers/login';
-import Join from './security/routers/join';
-import NotFoundContainer from './common/containers/notFoundContainer'
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { Login, Join, NotFount } from './pages/'
 
 
 function App() {
 
     return (
       <BrowserRouter>
-        {/* <Switch> */}
-          <Login />
-          <Join />
-          {/* <Redirect path="*" to="/" /> */}
-          {/* <Route component={NotFoundContainer} /> */}
-        {/* </Switch> */}
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/join">Join</Link>
+        </li>
+      </ul>
+
+
+        <Switch>
+          {/* <Login /> */}
+          {/* <Join /> */}
+          <Route path="/" exact component={Login}></Route>
+          <Route path="/join" component={Join}></Route>
+          <Route component={NotFount} />
+        </Switch>
       </BrowserRouter>
     );
 }

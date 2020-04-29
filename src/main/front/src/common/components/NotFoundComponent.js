@@ -3,7 +3,7 @@ import { Result, Button } from 'antd';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 
 
-function NotFoundContainer() {
+const NotFoundComponent = () => {
     return (
         <Result
             status="404"
@@ -14,4 +14,4 @@ function NotFoundContainer() {
     );
 }
 
-export default NotFoundContainer;
+export default NotFoundComponent;
