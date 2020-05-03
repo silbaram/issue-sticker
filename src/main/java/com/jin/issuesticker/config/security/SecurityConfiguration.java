@@ -34,7 +34,7 @@ public class SecurityConfiguration {
         http
         .csrf(csrf -> csrf.disable())
         .authorizeExchange()
-        .pathMatchers("/").permitAll()
+        .pathMatchers("/join").permitAll()
         .anyExchange().authenticated()
         .and()
         .redirectToHttps(redirect -> redirect.httpsRedirectWhen(e -> e.getRequest().getHeaders().containsKey("X-Forwarded-Proto"))
