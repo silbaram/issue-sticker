@@ -18,7 +18,7 @@ const LoginComponent = () => {
             <div style={{ width: 450, margin: "0 auto", textAlign: "center" }}>
                 <div style={{ position: "relative", paddingTop: 150, boxSizing: 168 }}>
                     <Title>Issue Sticker</Title>
-                </div>  
+                </div>
                 <div style={{ paddingTop: 50 }}>
                     <Form
                         name="loginForm"
