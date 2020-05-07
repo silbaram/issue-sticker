@@ -27,10 +27,10 @@ const JoinComponent = () => {
                         <Form.Item
                             name="useremail"
                             rules={[
-                            {
-                                required: true,
-                                message: '아이디를 입력해주세요.',
-                            },
+                                {
+                                    required: true,
+                                    message: '필수 정보입니다.',
+                                }
                             ]}
                         >
                             <Input 
@@ -43,16 +43,45 @@ const JoinComponent = () => {
                         <Form.Item
                             name="password"
                             rules={[
-                            {
-                                required: true,
-                                message: '비밀번호를 입력해주세요.',
-                            },
+                                {
+                                    required: true,
+                                    message: '8~16자 영문, 숫자, 특수문자를 사용하세요.',
+                                    pattern: /(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
+                                }
                             ]}
                         >
                             <Input.Password
                                 size="large"
                                 prefix={<LockOutlined />}
                                 placeholder="비밀번호"
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="confirm"
+                            dependencies={['password']}
+                            hasFeedback
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '필수 정보입니다.',
+                                },
+                                ({ getFieldValue }) => ({
+                                    validator(rule, value) {
+                                        if (!value || getFieldValue('password') === value) {
+                                            return Promise.resolve();
+                                        }
+
+                                        return Promise.reject('비밀번호가 일치하지 않습니다.');
+                                    },
+                                })
+                            ]}
+                        >
+
+                            <Input.Password
+                                size="large"
+                                prefix={<LockOutlined />}
+                                placeholder="비밀번호 재확인"
                             />
                         </Form.Item>
 
@@ -64,7 +93,15 @@ const JoinComponent = () => {
                             </Input>
                         </Form.Item>
 
-                        <Form.Item name={'email'}>
+                        <Form.Item 
+                            name={'email'}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '필수 정보입니다.',
+                                }
+                            ]}
+                        >
                             <Input
                                 size="large"
                                 addonAfter="@example.com"
