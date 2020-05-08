@@ -6,12 +6,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 
@@ -23,5 +23,11 @@ public class JoinRouterFunctional {
     public RouterFunction<ServerResponse> joinRouter(@Value("classpath:/public/index.html") Resource html) {
         return RouterFunctions.route(GET("/join"), request
                 -> ok().contentType(MediaType.TEXT_HTML).bodyValue(html));
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> saveJoinRouter(JoinHandlerFunctional joinHandlerFunctional) {
+
+        return RouterFunctions.route(POST("/security/join").and(accept(APPLICATION_JSON)), joinHandlerFunctional::join);
     }
 }

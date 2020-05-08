@@ -41,6 +41,7 @@ public class SecurityConfiguration {
         .authorizeExchange()
         .pathMatchers(resources).permitAll()
         .pathMatchers("/join").permitAll()
+        .pathMatchers("/security/join").permitAll()
         .anyExchange().authenticated()
         .and()
         .redirectToHttps(redirect -> redirect.httpsRedirectWhen(e -> e.getRequest().getHeaders().containsKey("X-Forwarded-Proto"))
