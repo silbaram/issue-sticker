@@ -31,7 +31,7 @@ const JoinComponent = (props) => {
                     onFinish={onFinish}
                     >
                         <Form.Item
-                            name="userid"
+                            name="id"
                             rules={[
                                 {
                                     required: true,
