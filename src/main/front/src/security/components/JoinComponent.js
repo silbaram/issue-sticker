@@ -1,17 +1,22 @@
 import React from 'react';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import {Form, Input, Button, Typography} from 'antd';
+import { Form, Input, Button, Typography } from 'antd';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 
 
-const JoinComponent = () => {
+const JoinComponent = (props) => {
+    const { onJoinAction } = props;
+    
     const { Title } = Typography;
-
     const StyledButton = styled(Button)`
         height: 40px;
         width: 450px;
     `;
+
+    const onFinish = values => {
+        onJoinAction(values);
+    };
 
     return (
         <div style={{ position: "relative", minHeight:200 }}>
@@ -21,11 +26,12 @@ const JoinComponent = () => {
                 </div>
                 <div style={{ paddingTop: 50 }}>
                 <Form
-                        name="loginForm"
-                        initialValues={{ remember: true }}
+                    name="loginForm"
+                    initialValues={{ remember: true }}
+                    onFinish={onFinish}
                     >
                         <Form.Item
-                            name="useremail"
+                            name="userid"
                             rules={[
                                 {
                                     required: true,
@@ -46,7 +52,7 @@ const JoinComponent = () => {
                                 {
                                     required: true,
                                     message: '8~16자 영문, 숫자, 특수문자를 사용하세요.',
-                                    pattern: /(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
+                                    // pattern: /(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
                                 }
                             ]}
                         >
@@ -97,6 +103,10 @@ const JoinComponent = () => {
                             name={'email'}
                             rules={[
                                 {
+                                    type: 'email',
+                                    message: 'E-mail 형식이 잘못되었습니다.',
+                                },
+                                {
                                     required: true,
                                     message: '필수 정보입니다.',
                                 }
@@ -104,7 +114,6 @@ const JoinComponent = () => {
                         >
                             <Input
                                 size="large"
-                                addonAfter="@example.com"
                                 placeholder="이메일"
                             >
                             </Input>

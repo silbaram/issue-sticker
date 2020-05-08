@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { Login, Join, NotFount } from '../../pages'
+import { Login, Join, NotFount } from '../pages'
 
 
 
