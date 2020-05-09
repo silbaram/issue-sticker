@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setId(userDto.getId());
         userEntity.setName(userDto.getName());
         userEntity.setEmail(userDto.getEmail());
-        userEntity.setRegisteredDate((Timestamp) new Date());
+        userEntity.setRegisteredDate(Timestamp.valueOf(LocalDateTime.now()));
 
         try {
             userEntityRepository.save(userEntity);

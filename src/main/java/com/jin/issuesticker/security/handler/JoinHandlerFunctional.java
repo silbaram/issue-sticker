@@ -22,10 +22,17 @@ public class JoinHandlerFunctional {
 
         Mono<UserDto> userDto = serverRequest.bodyToMono(UserDto.class);
 
-        userService.saveUserInfo(userDto);
+        UserDto saveUserDto = userService.saveUserInfo(userDto);
 
-        return ServerResponse.ok()
-                .contentType(APPLICATION_JSON)
-                .body(userDto, UserDto.class);
+        if(saveUserDto.isResult()) {
+            return ServerResponse.ok()
+                    .contentType(APPLICATION_JSON)
+                    .bodyValue(userDto);
+        } else {
+            return ServerResponse.badRequest()
+                    .contentType(APPLICATION_JSON)
+                    .bodyValue(userDto);
+        }
+
     }
 }
