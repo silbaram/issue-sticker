@@ -22,7 +22,7 @@ public class JoinRouterFunctional {
 
 
     @Bean
-    public RouterFunction<ServerResponse> joinRouter(@Value("classpath:/public/index.html") Resource html) {
+    public RouterFunction<ServerResponse> loginHtmlRouter(@Value("classpath:/public/index.html") Resource html) {
         return RouterFunctions.route(GET("/security/login"), request
                 -> ok().contentType(MediaType.TEXT_HTML).bodyValue(html));
     }
