@@ -27,11 +27,11 @@ public class JoinHandlerFunctional {
         if(saveUserDto.isResult()) {
             return ServerResponse.ok()
                     .contentType(APPLICATION_JSON)
-                    .bodyValue(userDto);
+                    .body(userDto, UserDto.class);
         } else {
             return ServerResponse.badRequest()
                     .contentType(APPLICATION_JSON)
-                    .bodyValue(userDto);
+                    .body(userDto, UserDto.class);
         }
 
     }

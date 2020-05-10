@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -16,12 +17,13 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 
 
 @Component
+//@RequestMapping("/security")
 public class JoinRouterFunctional {
 
 
     @Bean
     public RouterFunction<ServerResponse> joinRouter(@Value("classpath:/public/index.html") Resource html) {
-        return RouterFunctions.route(GET("/join"), request
+        return RouterFunctions.route(GET("/security/login"), request
                 -> ok().contentType(MediaType.TEXT_HTML).bodyValue(html));
     }
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import {Form, Input, Button, Typography} from 'antd';
 import styled from 'styled-components';
@@ -67,7 +68,7 @@ const LoginComponent = () => {
                 <div>
                     <Button type="link">아이디 찾기</Button>
                     <Button type="link">비밀번호 찾기</Button>
-                    <Button type="link" href="/join">회원가입</Button>
+                    <Button type="link"><Link to="/security/join">회원가입</Link></Button>
                 </div>
             </div>
         </div>

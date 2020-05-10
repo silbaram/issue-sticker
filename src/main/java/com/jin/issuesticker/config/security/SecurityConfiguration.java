@@ -40,8 +40,7 @@ public class SecurityConfiguration {
         .csrf(csrf -> csrf.disable())
         .authorizeExchange()
         .pathMatchers(resources).permitAll()
-        .pathMatchers("/join").permitAll()
-        .pathMatchers("/security/join").permitAll()
+        .pathMatchers("/security/**").permitAll()
         .anyExchange().authenticated()
         .and()
         .redirectToHttps(redirect -> redirect.httpsRedirectWhen(e -> e.getRequest().getHeaders().containsKey("X-Forwarded-Proto"))
@@ -49,7 +48,7 @@ public class SecurityConfiguration {
         .httpBasic()
         .and()
         .formLogin()
-        .loginPage("/login")
+        .loginPage("/security/login")
         .and()
         .logout()
         .logoutHandler(logoutHandler));
