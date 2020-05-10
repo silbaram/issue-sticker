@@ -2,6 +2,10 @@ import { Modal } from 'antd';
 import axios from 'axios';
 
 
+/**
+ * 회원 가입 요청
+ * @param {*} data 
+ */
 export function joinAction(data) {
 
     let result;
@@ -18,4 +22,13 @@ export function joinAction(data) {
     });
 
     return result;
+}
+
+
+/**
+ * 회원 가입시 ID 중복 체크
+ * @param {*} data 
+ */
+export function idCheckAction(data) {
+
 }

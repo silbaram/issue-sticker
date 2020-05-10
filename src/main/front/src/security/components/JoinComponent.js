@@ -6,10 +6,55 @@ import styled from 'styled-components';
 import JoinSuccess from '../../security/components/JoinSuccessComponent';
 
 
+const inputNoValidateStatusTag = (onIdCheckAction, idOverlapCheck) => (
+
+
+    <Form.Item
+        name="id"
+        rules={[
+            {
+                required: true,
+                message: idOverlapCheck === 'error' ? '중복된 아이디가 존재 합니다.' : '필수 정보입니다.',
+            }
+        ]}
+    >
+        <Input 
+            size="large"
+            prefix={<UserOutlined />}
+            placeholder="아이디"
+            onBlur={ () => onIdCheckAction(document.getElementById("loginForm_id").value) }
+        />
+    </Form.Item>
+);
+
+const inputValidateStatusTag = (onIdCheckAction, idOverlapCheck) => (
+    <Form.Item
+        name="id"
+        rules={[
+            {
+                required: true,
+                message: '필수 정보입니다.'
+            }
+        ]}
+        
+        validateStatus={idOverlapCheck}
+        help="중복된 아이디가 존재 합니다."
+        hasFeedback
+    >
+        <Input 
+            size="large"
+            prefix={<UserOutlined />}
+            placeholder="아이디"
+            onBlur={ () => onIdCheckAction(document.getElementById("loginForm_id").value) }
+        />
+    </Form.Item>
+);
+
+
 const JoinComponent = (props) => {
-    const { onJoinAction, isJoinSuccess } = props;
-    
+    const { onJoinAction, onIdCheckAction, checkInfo } = props;
     const { Title } = Typography;
+
     const StyledButton = styled(Button)`
         height: 40px;
         width: 450px;
@@ -19,7 +64,7 @@ const JoinComponent = (props) => {
         onJoinAction(values);
     };
 
-    if (isJoinSuccess) {
+    if (checkInfo.joinSuccess) {
         return <JoinSuccess />;
     } else {
         return (
@@ -34,22 +79,9 @@ const JoinComponent = (props) => {
                         initialValues={{ remember: true }}
                         onFinish={onFinish}
                         >
-                            <Form.Item
-                                name="id"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: '필수 정보입니다.',
-                                    }
-                                ]}
-                            >
-                                <Input 
-                                    size="large"
-                                    prefix={<UserOutlined />}
-                                    placeholder="아이디"
-                                />
-                            </Form.Item>
-        
+
+                            {checkInfo.idOverlapCheck === "" ? inputNoValidateStatusTag(onIdCheckAction, checkInfo.idOverlapCheck) : inputValidateStatusTag(onIdCheckAction, checkInfo.idOverlapCheck)}
+
                             <Form.Item
                                 name="password"
                                 rules={[
@@ -59,6 +91,7 @@ const JoinComponent = (props) => {
                                         // pattern: /(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
                                     }
                                 ]}
+                                hasFeedback
                             >
                                 <Input.Password
                                     size="large"
@@ -66,7 +99,7 @@ const JoinComponent = (props) => {
                                     placeholder="비밀번호"
                                 />
                             </Form.Item>
-        
+
                             <Form.Item
                                 name="confirm"
                                 dependencies={['password']}
@@ -81,20 +114,20 @@ const JoinComponent = (props) => {
                                             if (!value || getFieldValue('password') === value) {
                                                 return Promise.resolve();
                                             }
-        
+
                                             return Promise.reject('비밀번호가 일치하지 않습니다.');
                                         },
                                     })
                                 ]}
                             >
-        
+
                                 <Input.Password
                                     size="large"
                                     prefix={<LockOutlined />}
                                     placeholder="비밀번호 재확인"
                                 />
                             </Form.Item>
-        
+
                             <Form.Item name={'name'}>
                                 <Input
                                     size="large"
@@ -102,19 +135,20 @@ const JoinComponent = (props) => {
                                 >
                                 </Input>
                             </Form.Item>
-        
+
                             <Form.Item 
                                 name={'email'}
                                 rules={[
                                     {
                                         type: 'email',
-                                        message: 'E-mail 형식이 잘못되었습니다.',
+                                        message: 'e-mail 형식이 잘못되었습니다.',
                                     },
                                     {
                                         required: true,
                                         message: '필수 정보입니다.',
                                     }
                                 ]}
+                                hasFeedback
                             >
                                 <Input
                                     size="large"
@@ -122,7 +156,7 @@ const JoinComponent = (props) => {
                                 >
                                 </Input>
                             </Form.Item>
-        
+
                             <Form.Item>
                                 <StyledButton type="primary" htmlType="submit">
                                 Join
@@ -133,8 +167,7 @@ const JoinComponent = (props) => {
                 </div>
             </div>
         );
-    }
-    
+    }    
 }
 
 export default JoinComponent;

@@ -33,7 +33,7 @@ public class SecurityConfiguration {
         DelegatingServerLogoutHandler logoutHandler = new DelegatingServerLogoutHandler(securityContext, clearSiteData);
 
         String[] resources = new String[] {
-            "/", "/resources/**", "/public/**", "/static/**"
+            "/resources/**", "/public/**", "/static/**"
         };
 
         http

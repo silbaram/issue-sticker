@@ -17,16 +17,27 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 
 
 @Component
-//@RequestMapping("/security")
 public class JoinRouterFunctional {
 
 
+    /**
+     * 회원로그인, 가입 등 root 화면
+     * @param html
+     * @return
+     */
     @Bean
     public RouterFunction<ServerResponse> loginHtmlRouter(@Value("classpath:/public/index.html") Resource html) {
+
         return RouterFunctions.route(GET("/security/login"), request
                 -> ok().contentType(MediaType.TEXT_HTML).bodyValue(html));
     }
 
+
+    /**
+     * 회원 가입 요청
+     * @param joinHandlerFunctional
+     * @return
+     */
     @Bean
     public RouterFunction<ServerResponse> saveJoinRouter(JoinHandlerFunctional joinHandlerFunctional) {
 
