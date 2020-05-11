@@ -1,10 +1,10 @@
 package com.jin.issuesticker.security.handler;
 
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.jin.issuesticker.user.dto.UserDto;
 import com.jin.issuesticker.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
@@ -34,5 +34,24 @@ public class JoinHandlerFunctional {
                     .body(userDto, UserDto.class);
         }
 
+    }
+
+    public Mono<ServerResponse> checkId(ServerRequest serverRequest) {
+
+        String checkId = serverRequest.pathVariable("id");
+
+//        UserDto saveUserDto = userService.saveUserInfo(userDto);
+
+//        if(saveUserDto.isResult()) {
+//            return ServerResponse.ok()
+//                    .contentType(APPLICATION_JSON)
+//                    .body(userDto, UserDto.class);
+//        } else {
+//            return ServerResponse.badRequest()
+//                    .contentType(APPLICATION_JSON)
+//                    .body(userDto, UserDto.class);
+//        }
+
+        return ServerResponse.ok().body(BodyInserters.fromValue(true));
     }
 }

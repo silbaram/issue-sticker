@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -42,5 +41,17 @@ public class JoinRouterFunctional {
     public RouterFunction<ServerResponse> saveJoinRouter(JoinHandlerFunctional joinHandlerFunctional) {
 
         return RouterFunctions.route(POST("/security/join").and(accept(APPLICATION_JSON)), joinHandlerFunctional::join);
+    }
+
+
+    /**
+     * 회원 가입시 아이디 중복이 있는지 체크
+     * @param joinHandlerFunctional
+     * @return
+     */
+    @Bean
+    public RouterFunction<ServerResponse> checkId(JoinHandlerFunctional joinHandlerFunctional) {
+
+        return RouterFunctions.route(GET("/security/check/{id}"), joinHandlerFunctional::checkId);
     }
 }

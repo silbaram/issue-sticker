@@ -30,10 +30,10 @@ const JoinContainer = () => {
      */
     function idCheckAction(data) {
         console.log("idCheckAction", data);
-        // setIdOverlapCheck("validating");
-        // setIdOverlapCheck("error");
-        // setIdOverlapCheck("success");
-        setIdOverlapCheck("");
+        setIdOverlapCheck("validating");
+        let result = service.idCheckAction(data);
+        console.log("result", result);
+        setIdOverlapCheck(result);
     }
 
     return (

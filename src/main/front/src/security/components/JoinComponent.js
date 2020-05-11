@@ -7,8 +7,6 @@ import JoinSuccess from '../../security/components/JoinSuccessComponent';
 
 
 const inputNoValidateStatusTag = (onIdCheckAction, idOverlapCheck) => (
-
-
     <Form.Item
         name="id"
         rules={[
@@ -38,7 +36,7 @@ const inputValidateStatusTag = (onIdCheckAction, idOverlapCheck) => (
         ]}
         
         validateStatus={idOverlapCheck}
-        help="중복된 아이디가 존재 합니다."
+        help={idOverlapCheck === "success" ? "사용 가능한 아이디 입니다." : "중복된 아이디가 존재 합니다."}
         hasFeedback
     >
         <Input 
@@ -61,7 +59,8 @@ const JoinComponent = (props) => {
     `;
 
     const onFinish = values => {
-        onJoinAction(values);
+        console.log(values);
+        // onJoinAction(values);
     };
 
     if (checkInfo.joinSuccess) {
