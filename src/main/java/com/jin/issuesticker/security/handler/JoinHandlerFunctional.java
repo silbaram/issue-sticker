@@ -51,7 +51,8 @@ public class JoinHandlerFunctional {
 //                    .contentType(APPLICATION_JSON)
 //                    .body(userDto, UserDto.class);
 //        }
+//success
 
-        return ServerResponse.ok().body(BodyInserters.fromValue(true));
+        return ServerResponse.ok().body(BodyInserters.fromValue("error"));
     }
 }
