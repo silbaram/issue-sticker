@@ -55,5 +55,5 @@ export function idCheckAction(data) {
 
     // return result;
 
-    return "error";
+    return "success";
 }
