@@ -1,8 +1,8 @@
 package com.jin.issuesticker.security.service;
 
-
 import com.jin.issuesticker.user.models.UserEntity;
 import com.jin.issuesticker.user.repository.UserEntityRepository;
+import com.sun.xml.bind.v2.model.core.ID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
@@ -22,18 +22,16 @@ public class ReactiveUserDetailsServiceImpl implements ReactiveUserDetailsServic
 
 
     @Override
-    public Mono<UserDetails> findByUsername(String s) throws UsernameNotFoundException {
-        log.info("findByUsername : {}", s);
-        //TODO UserDetails 객체를 생성후 Mono객체로 컴퍼트
-        //UserEntity user = userEntityRepository.findById(id);
+    public Mono<UserDetails> findByUsername(String id) throws UsernameNotFoundException {
+
+        UserEntity user = userEntityRepository.findById(id);
 
         //TODO 임시로 지정
-        UserDetails user = User.builder()
-        .username("user")
-        .password("{noop}user")
+        UserDetails userDetails = User.builder()
+        .username(user.getName())
         .roles("USER")
         .build();
 
-        return Mono.just(user);
+        return Mono.just(userDetails);
     }
 }

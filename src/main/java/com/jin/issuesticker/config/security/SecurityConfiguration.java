@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.logout.DelegatingServerLogoutHandler;
 import org.springframework.security.web.server.authentication.logout.HeaderWriterServerLogoutHandler;
@@ -54,5 +56,28 @@ public class SecurityConfiguration {
         .logoutHandler(logoutHandler));
 
         return http.build();
+    }
+
+
+//    @Bean
+//    public AuthenticationWebFilter webFilter() {
+//        AuthenticationWebFilter authenticationWebFilter = new AuthenticationWebFilter(repositoryReactiveAuthenticationManager());
+//        authenticationWebFilter.setAuthenticationConverter(new TokenAuthenticationConverter(tokenProvider));
+//        authenticationWebFilter.setRequiresAuthenticationMatcher(new JWTHeadersExchangeMatcher());
+//        authenticationWebFilter.setSecurityContextRepository(new WebSessionServerSecurityContextRepository());
+//        return authenticationWebFilter;
+//    }
+
+
+//    @Bean
+//    public JWTReactiveAuthenticationManager repositoryReactiveAuthenticationManager() {
+//        JWTReactiveAuthenticationManager repositoryReactiveAuthenticationManager = new JWTReactiveAuthenticationManager(reactiveUserDetailsService, passwordEncoder());
+//        return repositoryReactiveAuthenticationManager;
+//    }
+
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
