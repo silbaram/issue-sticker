@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Modal } from 'antd';
 import JoinComponent from '../components/JoinComponent';
 import * as service from '../actions';
 
@@ -18,22 +19,26 @@ const JoinContainer = () => {
      * @param {*} data 
      */
     function joinAction(data) {
-        let result = service.joinAction(data);
-        if(result) {
-            setJoinSuccess(result);
-        }
+        service.joinAction(data)
+        .then(response => {
+            setJoinSuccess(true);
+        }).catch(error => {
+            Modal.error({
+                title: "회원 가입 실페",
+                content: "계속 장애 발생시 운영자에게 연락 바랍니다."
+            });
+        });
     }
 
     /**
      * 회원 가입시 ID 중복 체크
      * @param {*} data 
      */
-    function idCheckAction(data) {
-        console.log("idCheckAction", data);
-        setIdOverlapCheck("validating");
-        let result = service.idCheckAction(data);
-        console.log("result", result);
-        setIdOverlapCheck(result);
+    const idCheckAction = data => {
+        service.idCheckAction(data)
+        .then(response => {
+            setIdOverlapCheck(response.data);
+        });
     }
 
     return (

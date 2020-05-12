@@ -10,7 +10,6 @@ import reactor.core.publisher.Mono;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 
 @Service
@@ -42,5 +41,21 @@ public class UserServiceImpl implements UserService {
         }
 
         return userDto;
+    }
+
+
+    /**
+     * 회원 가입시 ID 중복 체크용
+     * @param id
+     * @return true: 사용가능, false: 중복
+     */
+    @Override
+    public boolean joinCheckId(String id) {
+        Long count = userEntityRepository.countById(id);
+        if (count > 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

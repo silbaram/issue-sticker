@@ -60,7 +60,6 @@ const JoinComponent = (props) => {
 
     const onFinish = values => {
         if(checkInfo.idOverlapCheck === "success") {
-            console.log(values);
             onJoinAction(values);
         }
     };

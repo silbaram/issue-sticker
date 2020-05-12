@@ -18,6 +18,12 @@ public class JoinHandlerFunctional {
     @Autowired
     UserService userService;
 
+
+    /**
+     * 회원 가입 처리
+     * @param serverRequest
+     * @return
+     */
     public Mono<ServerResponse> join(ServerRequest serverRequest) {
 
         Mono<UserDto> userDto = serverRequest.bodyToMono(UserDto.class);
@@ -36,23 +42,22 @@ public class JoinHandlerFunctional {
 
     }
 
+
+    /**
+     * 회원 가입시 ID 중복 체크 처리
+     * @param serverRequest
+     * @return
+     */
     public Mono<ServerResponse> checkId(ServerRequest serverRequest) {
 
         String checkId = serverRequest.pathVariable("id");
 
-//        UserDto saveUserDto = userService.saveUserInfo(userDto);
+        boolean checkResult = userService.joinCheckId(checkId);
 
-//        if(saveUserDto.isResult()) {
-//            return ServerResponse.ok()
-//                    .contentType(APPLICATION_JSON)
-//                    .body(userDto, UserDto.class);
-//        } else {
-//            return ServerResponse.badRequest()
-//                    .contentType(APPLICATION_JSON)
-//                    .body(userDto, UserDto.class);
-//        }
-//success
-
-        return ServerResponse.ok().body(BodyInserters.fromValue("error"));
+        if(checkResult) {
+            return ServerResponse.ok().body(BodyInserters.fromValue("success"));
+        } else {
+            return ServerResponse.ok().body(BodyInserters.fromValue("error"));
+        }
     }
 }

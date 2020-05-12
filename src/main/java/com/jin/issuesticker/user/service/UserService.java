@@ -6,4 +6,5 @@ import reactor.core.publisher.Mono;
 
 public interface UserService {
     UserDto saveUserInfo(Mono<UserDto> userDto);
+    boolean joinCheckId(String id);
 }

@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * 유저 엔티티 관련 Repository
  */
 public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
-    UserEntity findById(String id);
+    Long countById(String id);
 }
