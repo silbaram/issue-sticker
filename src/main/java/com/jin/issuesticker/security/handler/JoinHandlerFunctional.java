@@ -1,5 +1,6 @@
 package com.jin.issuesticker.security.handler;
 
+import com.jin.issuesticker.user.dto.JoinUserDto;
 import com.jin.issuesticker.user.dto.UserDto;
 import com.jin.issuesticker.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +27,18 @@ public class JoinHandlerFunctional {
      */
     public Mono<ServerResponse> join(ServerRequest serverRequest) {
 
-        Mono<UserDto> userDto = serverRequest.bodyToMono(UserDto.class);
+        Mono<JoinUserDto> userDto = serverRequest.bodyToMono(JoinUserDto.class);
 
-        UserDto saveUserDto = userService.saveUserInfo(userDto);
+        JoinUserDto saveUserDto = userService.saveUserInfo(userDto);
 
         if(saveUserDto.isResult()) {
             return ServerResponse.ok()
                     .contentType(APPLICATION_JSON)
-                    .body(userDto, UserDto.class);
+                    .body(userDto, JoinUserDto.class);
         } else {
             return ServerResponse.badRequest()
                     .contentType(APPLICATION_JSON)
-                    .body(userDto, UserDto.class);
+                    .body(userDto, JoinUserDto.class);
         }
 
     }
@@ -48,7 +49,7 @@ public class JoinHandlerFunctional {
      * @param serverRequest
      * @return
      */
-    public Mono<ServerResponse> checkId(ServerRequest serverRequest) {
+    public Mono<ServerResponse> uniqueIdValidation(ServerRequest serverRequest) {
 
         String checkId = serverRequest.pathVariable("id");
 

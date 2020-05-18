@@ -1,9 +1,11 @@
 package com.jin.issuesticker.user.service.impl;
 
+import com.jin.issuesticker.user.dto.JoinUserDto;
 import com.jin.issuesticker.user.dto.UserDto;
 import com.jin.issuesticker.user.models.UserEntity;
 import com.jin.issuesticker.user.repository.UserEntityRepository;
 import com.jin.issuesticker.user.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -18,29 +20,33 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserEntityRepository userEntityRepository;
 
+    @Autowired
+    ModelMapper modelMapper;
+
+
     /**
      * 사용자 정보를 DB에 등록
      * @param monoUserDto
      */
     @Override
-    public UserDto saveUserInfo(Mono<UserDto> monoUserDto) {
-        UserDto userDto = monoUserDto.block();
+    public JoinUserDto saveUserInfo(Mono<JoinUserDto> monoUserDto) {
+        JoinUserDto joinUserDto = monoUserDto.block();
 
         UserEntity userEntity = new UserEntity();
-        userEntity.setId(userDto.getId());
-        userEntity.setName(userDto.getName());
-        userEntity.setEmail(userDto.getEmail());
+        userEntity.setId(joinUserDto.getId());
+        userEntity.setUsername(joinUserDto.getName());
+        userEntity.setEmail(joinUserDto.getEmail());
         userEntity.setRegisteredDate(Timestamp.valueOf(LocalDateTime.now()));
 
         try {
             userEntityRepository.save(userEntity);
 
-            userDto.setResult(true);
+            joinUserDto.setResult(true);
         } catch (Exception e) {
-            userDto.setResult(false);
+            joinUserDto.setResult(false);
         }
 
-        return userDto;
+        return joinUserDto;
     }
 
 
@@ -57,5 +63,19 @@ public class UserServiceImpl implements UserService {
         } else {
             return true;
         }
+    }
+
+
+    /**
+     * 아이디로 유저 정보 찾기
+     * @param id
+     * @return
+     */
+    @Override
+    public Mono<UserDto> findById(String id) {
+        UserEntity userEntity = userEntityRepository.findById(id);
+        UserDto userDto = modelMapper.map(userEntity, UserDto.class);
+
+        return Mono.just(userDto);
     }
 }

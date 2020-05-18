@@ -16,5 +16,5 @@ export function joinAction(data) {
  * @return true:중복, false:사용가능
  */
 export function idCheckAction(data) {
-    return axios.get('/security/check/'+data);
+    return axios.get('/security/validation/'+data);
 }
