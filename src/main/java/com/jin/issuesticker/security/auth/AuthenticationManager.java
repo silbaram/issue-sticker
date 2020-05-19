@@ -20,6 +20,7 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
     @Autowired
     private JWTUtil jwtUtil;
 
+
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {
 
@@ -34,8 +35,8 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
             Claims claims = jwtUtil.getAllClaimsFromToken(authToken);
             List<String> rolesMap = claims.get("role", List.class);
             List<GrantedAuthority> authorities = new ArrayList<>();
-            for (String rolemap : rolesMap) {
-                authorities.add(new SimpleGrantedAuthority(rolemap));
+            for (String roleMap : rolesMap) {
+                authorities.add(new SimpleGrantedAuthority(roleMap));
             }
 
             return Mono.just(new UsernamePasswordAuthenticationToken(username, null, authorities));

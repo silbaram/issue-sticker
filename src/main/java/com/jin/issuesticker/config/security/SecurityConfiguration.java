@@ -1,6 +1,9 @@
 package com.jin.issuesticker.config.security;
 
+import com.jin.issuesticker.security.auth.AuthenticationManager;
+import com.jin.issuesticker.security.auth.SecurityContextRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
@@ -18,9 +21,15 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class SecurityConfiguration {
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private SecurityContextRepository securityContextRepository;
+
+
     @Bean
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
-
 
         String[] resources = new String[] {
             "/resources/**", "/public/**", "/static/**"
@@ -32,6 +41,8 @@ public class SecurityConfiguration {
         .httpBasic(httpBasicSpec -> httpBasicSpec.disable());
 
         http
+        .authenticationManager(authenticationManager)
+        .securityContextRepository(securityContextRepository)
         .authorizeExchange()
         .pathMatchers(resources).permitAll()
         .pathMatchers("/security/**").permitAll()
@@ -51,11 +62,11 @@ public class SecurityConfiguration {
         //.authenticationEntryPoint((serverWebExchange, e) -> Mono.fromRunnable((() -> serverWebExchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED))))
         //.accessDeniedHandler((serverWebExchange, e) -> Mono.fromRunnable((() -> serverWebExchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN))))
 
-        .and()
-        .securityContextRepository(NoOpServerSecurityContextRepository.getInstance());
+//        .and()
+//        .securityContextRepository(NoOpServerSecurityContextRepository.getInstance());
         //.and()
         //.redirectToHttps(redirect -> redirect.httpsRedirectWhen(e -> e.getRequest().getHeaders().containsKey("X-Forwarded-Proto"));
-
+        ;
         return http.build();
     }
 }

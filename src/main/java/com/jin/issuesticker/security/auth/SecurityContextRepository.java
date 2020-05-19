@@ -16,6 +16,8 @@ import reactor.core.publisher.Mono;
 @Component
 public class SecurityContextRepository implements ServerSecurityContextRepository {
 
+    private static final String BEARER = "Bearer ";
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -31,7 +33,7 @@ public class SecurityContextRepository implements ServerSecurityContextRepositor
         ServerHttpRequest request = serverWebExchange.getRequest();
         String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+        if (authHeader != null && authHeader.startsWith(BEARER)) {
             String authToken = authHeader.substring(7);
             Authentication auth = new UsernamePasswordAuthenticationToken(authToken, authToken);
             return this.authenticationManager.authenticate(auth).map((authentication) ->

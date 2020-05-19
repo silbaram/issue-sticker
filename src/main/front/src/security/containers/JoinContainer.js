@@ -18,7 +18,7 @@ const JoinContainer = () => {
      * 회원 가입 요청
      * @param {*} data 
      */
-    function joinAction(data) {
+    const joinAction = data => {
         service.joinAction(data)
         .then(response => {
             setJoinSuccess(true);

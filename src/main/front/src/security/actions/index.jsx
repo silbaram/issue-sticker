@@ -18,3 +18,13 @@ export function joinAction(data) {
 export function idCheckAction(data) {
     return axios.get('/security/validation/'+data);
 }
+
+
+/**
+ * 로그인 요청
+ * @param {*} data 
+ */
+export function login(data) {
+    console.log('data', data);
+    return axios.post('/security/login', data);
+}

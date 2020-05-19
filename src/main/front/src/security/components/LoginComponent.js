@@ -6,13 +6,18 @@ import styled from 'styled-components';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 
 
-const LoginComponent = () => {
+const LoginComponent = (props) => {
+    const { onLoginAction } = props;
     const { Title } = Typography;
 
     const StyledButton = styled(Button)`
         height: 40px;
         width: 450px;
     `;
+
+    const onFinish = values => {
+        onLoginAction(values);
+    };
 
     return (
         <div style={{ position: "relative", minHeight:200 }}>
@@ -24,6 +29,7 @@ const LoginComponent = () => {
                     <Form
                         name="loginForm"
                         initialValues={{ remember: true }}
+                        onFinish={onFinish}
                     >
                         <Form.Item
                             name="useremail"
