@@ -1,5 +1,6 @@
 package com.jin.issuesticker.user.service.impl;
 
+import com.jin.issuesticker.security.auth.PBKDF2Encoder;
 import com.jin.issuesticker.user.dto.JoinUserDto;
 import com.jin.issuesticker.user.dto.UserDto;
 import com.jin.issuesticker.user.models.UserEntity;
@@ -21,6 +22,9 @@ public class UserServiceImpl implements UserService {
     UserEntityRepository userEntityRepository;
 
     @Autowired
+    private PBKDF2Encoder passwordEncoder;
+
+    @Autowired
     ModelMapper modelMapper;
 
 
@@ -35,6 +39,7 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = new UserEntity();
         userEntity.setId(joinUserDto.getId());
         userEntity.setUsername(joinUserDto.getName());
+        userEntity.setPassword(passwordEncoder.encode(joinUserDto.getPassword()));
         userEntity.setEmail(joinUserDto.getEmail());
         userEntity.setRegisteredDate(Timestamp.valueOf(LocalDateTime.now()));
 
@@ -74,7 +79,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Mono<UserDto> findById(String id) {
         UserEntity userEntity = userEntityRepository.findById(id);
-        UserDto userDto = modelMapper.map(userEntity, UserDto.class);
+        UserDto userDto = UserDto.builder()
+                .id(userEntity.getId())
+                .password(userEntity.getPassword())
+                .username(userEntity.getUsername())
+                .email(userEntity.getEmail())
+                .build();
+//        UserDto userDto = modelMapper.map(userEntity, UserDto.class);
 
         return Mono.just(userDto);
     }

@@ -39,14 +39,23 @@ public class LoginHandlerFunctional {
     public Mono<ServerResponse> login(ServerRequest serverRequest) {
 
         Mono<UserDto> userDto = serverRequest.bodyToMono(UserDto.class);
-        Mono<UserDto> loginUserDto = userService.findById(userDto.block().getId());
+        UserDto requestUserDto = userDto.block();
+        Mono<UserDto> loginUserDto = userService.findById(requestUserDto.getId());
 
-        return loginUserDto.flatMap(userDetails -> {
-            if (passwordEncoder.encode(userDto.block().getPassword()).equals(userDetails.getPassword())) {
-                return ServerResponse.ok().contentType(APPLICATION_JSON).body(new AuthResponse(jwtUtil.generateToken(userDetails)), AuthResponse.class);
-            } else {
-                return ServerResponse.status(HttpStatus.UNAUTHORIZED).build();
-            }
-        }).defaultIfEmpty((ServerResponse) ServerResponse.status(HttpStatus.UNAUTHORIZED).build());
+        UserDto checkLUserDto = loginUserDto.block();
+        if (passwordEncoder.matches(requestUserDto.getPassword(), checkLUserDto.getPassword())) {
+            return ServerResponse.ok().contentType(APPLICATION_JSON).body(new AuthResponse(jwtUtil.generateToken(checkLUserDto)), AuthResponse.class);
+        } else {
+            return ServerResponse.status(HttpStatus.UNAUTHORIZED).build();
+        }
+//        Mono<ServerResponse> serverResponseMono = loginUserDto.flatMap(userDetails -> {
+//            if (passwordEncoder.encode(userDto.block().getPassword()).equals(userDetails.getPassword())) {
+//                return ServerResponse.ok().contentType(APPLICATION_JSON).body(new AuthResponse(jwtUtil.generateToken(userDetails)), AuthResponse.class);
+//            } else {
+//                return ServerResponse.status(HttpStatus.UNAUTHORIZED).build();
+//            }
+//        }).defaultIfEmpty((ServerResponse) ServerResponse.status(HttpStatus.UNAUTHORIZED).build());
+
+//        return ServerResponse.status(HttpStatus.UNAUTHORIZED).build();
     }
 }

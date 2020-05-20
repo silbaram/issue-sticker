@@ -1,8 +1,6 @@
 package com.jin.issuesticker.user.dto;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,23 +11,35 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Data
 @ToString
 public class UserDto implements UserDetails {
 
-    @Id
+    @Getter @Setter
+    private Long idx;
+
+    @Id @Getter @Setter
     private String id;
-    private String username;
+
+    @Setter
     private String password;
+
+    @Getter @Setter
+    private String username;
+
+    @Getter @Setter
     private String email;
 
-    private boolean active = true;
+    @Getter @Setter
     private List<String> roles;
 
+    private boolean active = true;
+
     @Builder
-    public UserDto(String id, String username, List<String> roles) {
+    public UserDto(String id, String password, String username, String email, List<String> roles) {
         this.id = id;
+        this.password = password;
         this.username = username;
+        this.email = email;
         this.roles = roles;
     }
 

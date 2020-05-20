@@ -32,7 +32,7 @@ const LoginComponent = (props) => {
                         onFinish={onFinish}
                     >
                         <Form.Item
-                            name="useremail"
+                            name="id"
                             rules={[
                                 {
                                     required: true,

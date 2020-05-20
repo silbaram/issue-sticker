@@ -1,5 +1,6 @@
 package com.jin.issuesticker.security.handler;
 
+import com.jin.issuesticker.security.auth.PBKDF2Encoder;
 import com.jin.issuesticker.user.dto.JoinUserDto;
 import com.jin.issuesticker.user.dto.UserDto;
 import com.jin.issuesticker.user.service.UserService;
