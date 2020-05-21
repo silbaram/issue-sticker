@@ -14,6 +14,7 @@ const LoginContainer = () => {
         service.login(data)
         .then(response => {
             // TODO 페이지 이동 추가
+            console.log(response);
         })
         .catch(error => {
             topMessage("가입 승인 대기 중이거나 잘못된 로그인 정보입니다.");

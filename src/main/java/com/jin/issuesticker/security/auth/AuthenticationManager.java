@@ -35,9 +35,10 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
             Claims claims = jwtUtil.getAllClaimsFromToken(authToken);
             List<String> rolesMap = claims.get("role", List.class);
             List<GrantedAuthority> authorities = new ArrayList<>();
-            for (String roleMap : rolesMap) {
-                authorities.add(new SimpleGrantedAuthority(roleMap));
-            }
+            //TODO role를 저정해줘야 됨
+//            for (String roleMap : rolesMap) {
+//                authorities.add(new SimpleGrantedAuthority(roleMap));
+//            }
 
             return Mono.just(new UsernamePasswordAuthenticationToken(username, null, authorities));
 

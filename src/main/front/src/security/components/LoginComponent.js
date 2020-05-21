@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import {Form, Input, Button, Typography} from 'antd';
+import {Form, Input, Button, Typography, Divider} from 'antd';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 
@@ -70,7 +70,7 @@ const LoginComponent = (props) => {
                         </Form.Item>
                     </Form>
                 </div>
-                <hr style={{ width: 450 }} />
+                <Divider />
                 <div style={{ textAlign: "center" }}>
                     <Button type="link">아이디 찾기</Button>
                     <Button type="link">비밀번호 찾기</Button>
