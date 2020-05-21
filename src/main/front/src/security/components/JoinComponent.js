@@ -16,6 +16,8 @@ const inputNoValidateStatusTag = (onIdCheckAction, idOverlapCheck) => (
                 message: idOverlapCheck === 'error' ? '중복된 아이디가 존재 합니다.' : '필수 정보입니다.',
             }
         ]}
+
+        hasFeedback
     >
         <Input 
             size="large"
