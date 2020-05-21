@@ -3,14 +3,12 @@ package com.jin.issuesticker.security.handler;
 import com.jin.issuesticker.security.auth.JWTUtil;
 import com.jin.issuesticker.security.auth.PBKDF2Encoder;
 import com.jin.issuesticker.security.auth.dto.AuthResponse;
-import com.jin.issuesticker.user.dto.JoinUserDto;
 import com.jin.issuesticker.user.dto.UserDto;
 import com.jin.issuesticker.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
@@ -38,24 +36,20 @@ public class LoginHandlerFunctional {
      */
     public Mono<ServerResponse> login(ServerRequest serverRequest) {
 
-        Mono<UserDto> userDto = serverRequest.bodyToMono(UserDto.class);
-        UserDto requestUserDto = userDto.block();
-        Mono<UserDto> loginUserDto = userService.findById(requestUserDto.getId());
+        UserDto requestUserDto = serverRequest.bodyToMono(UserDto.class).block();
 
-        UserDto checkLUserDto = loginUserDto.block();
-        if (passwordEncoder.matches(requestUserDto.getPassword(), checkLUserDto.getPassword())) {
-            return ServerResponse.ok().contentType(APPLICATION_JSON).body(new AuthResponse(jwtUtil.generateToken(checkLUserDto)), AuthResponse.class);
-        } else {
+        // 회원 정보 조회
+        Mono<UserDto> loginUserDto = userService.findByIdAndIsAccess(requestUserDto.getId());
+        if (ObjectUtils.isEmpty(loginUserDto)) {
             return ServerResponse.status(HttpStatus.UNAUTHORIZED).build();
         }
-//        Mono<ServerResponse> serverResponseMono = loginUserDto.flatMap(userDetails -> {
-//            if (passwordEncoder.encode(userDto.block().getPassword()).equals(userDetails.getPassword())) {
-//                return ServerResponse.ok().contentType(APPLICATION_JSON).body(new AuthResponse(jwtUtil.generateToken(userDetails)), AuthResponse.class);
-//            } else {
-//                return ServerResponse.status(HttpStatus.UNAUTHORIZED).build();
-//            }
-//        }).defaultIfEmpty((ServerResponse) ServerResponse.status(HttpStatus.UNAUTHORIZED).build());
 
-//        return ServerResponse.status(HttpStatus.UNAUTHORIZED).build();
+        return loginUserDto.flatMap(userDetails -> {
+            if (passwordEncoder.encode(requestUserDto.getPassword()).equals(userDetails.getPassword())) {
+                return ServerResponse.ok().contentType(APPLICATION_JSON).body(Mono.just(new AuthResponse(jwtUtil.generateToken(userDetails))), AuthResponse.class);
+            } else {
+                return ServerResponse.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        });
     }
 }

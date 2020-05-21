@@ -21,8 +21,8 @@ const LoginComponent = (props) => {
 
     return (
         <div style={{ position: "relative", minHeight:200 }}>
-            <div style={{ width: 450, margin: "0 auto", textAlign: "center" }}>
-                <div style={{ position: "relative", paddingTop: 150, boxSizing: 168 }}>
+            <div style={{ width: 450, margin: "0 auto"}}>
+                <div style={{ position: "relative", paddingTop: 150, boxSizing: 168, textAlign: "center" }}>
                     <Title>Issue Sticker</Title>
                 </div>
                 <div style={{ paddingTop: 50 }}>
@@ -71,7 +71,7 @@ const LoginComponent = (props) => {
                     </Form>
                 </div>
                 <hr style={{ width: 450 }} />
-                <div>
+                <div style={{ textAlign: "center" }}>
                     <Button type="link">아이디 찾기</Button>
                     <Button type="link">비밀번호 찾기</Button>
                     <Button type="link"><Link to="/security/join">회원가입</Link></Button>

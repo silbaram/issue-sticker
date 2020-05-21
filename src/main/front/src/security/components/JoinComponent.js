@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Typography } from 'antd';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
@@ -69,8 +70,8 @@ const JoinComponent = (props) => {
     } else {
         return (
             <div style={{ position: "relative", minHeight:200 }}>
-                <div style={{ width: 450, margin: "0 auto", textAlign: "center" }}>
-                    <div style={{ position: "relative", paddingTop: 150, boxSizing: 168 }}>
+                <div style={{ width: 450, margin: "0 auto" }}>
+                    <div style={{ position: "relative", paddingTop: 150, boxSizing: 168, textAlign: "center" }}>
                         <Title>Issue Sticker</Title>
                     </div>
                     <div style={{ paddingTop: 50 }}>
@@ -89,6 +90,7 @@ const JoinComponent = (props) => {
                                         required: true,
                                         message: '8~16자 영문, 숫자, 특수문자를 사용하세요.',
                                         // pattern: /(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
+                                        // TOOD 운영 갈때는 위에 주석을 풀어 줘야 한다.
                                     }
                                 ]}
                                 hasFeedback
@@ -163,6 +165,12 @@ const JoinComponent = (props) => {
                                 </StyledButton>
                             </Form.Item>
                         </Form>
+                    </div>
+                    <hr style={{ width: 450 }} />
+                    <div style={{ textAlign: "center" }}>
+                        <Button type="link">아이디 찾기</Button>
+                        <Button type="link">비밀번호 찾기</Button>
+                        <Button type="link"><Link to="/security/login">로그인</Link></Button>
                     </div>
                 </div>
             </div>

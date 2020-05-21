@@ -22,7 +22,8 @@ const JoinContainer = () => {
         service.joinAction(data)
         .then(response => {
             setJoinSuccess(true);
-        }).catch(error => {
+        })
+        .catch(error => {
             Modal.error({
                 title: "회원 가입 실페",
                 content: "계속 장애 발생시 운영자에게 연락 바랍니다."
@@ -35,8 +36,14 @@ const JoinContainer = () => {
      * @param {*} data 
      */
     const idCheckAction = data => {
+        if (data === "") {
+            setIdOverlapCheck("");
+            return false;
+        }
+        
         service.idCheckAction(data)
         .then(response => {
+            console.log("response.data", response.data);
             setIdOverlapCheck(response.data);
         });
     }

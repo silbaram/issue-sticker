@@ -9,6 +9,7 @@ import com.jin.issuesticker.user.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import reactor.core.publisher.Mono;
 
 import java.sql.Timestamp;
@@ -77,15 +78,19 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public Mono<UserDto> findById(String id) {
-        UserEntity userEntity = userEntityRepository.findById(id);
+    public Mono<UserDto> findByIdAndIsAccess(String id) {
+        UserEntity userEntity = userEntityRepository.findByIdAndIsAccess(id, 1);
+        if (ObjectUtils.isEmpty(userEntity)) {
+            return null;
+        }
+
         UserDto userDto = UserDto.builder()
                 .id(userEntity.getId())
                 .password(userEntity.getPassword())
                 .username(userEntity.getUsername())
                 .email(userEntity.getEmail())
+                .isAccess(0)
                 .build();
-//        UserDto userDto = modelMapper.map(userEntity, UserDto.class);
 
         return Mono.just(userDto);
     }

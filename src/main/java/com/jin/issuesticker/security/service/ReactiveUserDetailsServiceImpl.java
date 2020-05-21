@@ -25,7 +25,7 @@ public class ReactiveUserDetailsServiceImpl implements ReactiveUserDetailsServic
     @Override
     public Mono<UserDetails> findByUsername(String id) throws UsernameNotFoundException {
 
-        UserEntity user = userEntityRepository.findById(id);
+        UserEntity user = userEntityRepository.findByIdAndIsAccess(id, 1);
 
         UserDto userDetails = UserDto.builder()
         .id(user.getId())

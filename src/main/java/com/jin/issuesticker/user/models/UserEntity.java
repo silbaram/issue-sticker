@@ -25,6 +25,9 @@ public class UserEntity {
     @Column(name = "email")
     String email;
 
+    @Column(name = "is_access")
+    int isAccess;
+
     @Column(name = "registered_date")
     Timestamp registeredDate;
 

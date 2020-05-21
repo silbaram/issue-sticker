@@ -30,16 +30,20 @@ public class UserDto implements UserDetails {
     private String email;
 
     @Getter @Setter
+    private int isAccess;
+
+    @Getter @Setter
     private List<String> roles;
 
     private boolean active = true;
 
     @Builder
-    public UserDto(String id, String password, String username, String email, List<String> roles) {
+    public UserDto(String id, String password, String username, String email, int isAccess, List<String> roles) {
         this.id = id;
         this.password = password;
         this.username = username;
         this.email = email;
+        this.isAccess = isAccess;
         this.roles = roles;
     }
 
