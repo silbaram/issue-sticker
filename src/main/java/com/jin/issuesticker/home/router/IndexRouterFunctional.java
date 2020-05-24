@@ -15,9 +15,9 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 public class IndexRouterFunctional {
 
 
-//    @Bean
-//    public RouterFunction<ServerResponse> indexRouter() {
-//        return RouterFunctions.route(GET("/"), request
-//                -> ServerResponse.temporaryRedirect(URI.create("/security/login")).build()); //TODO 로그인 유무에 따라서 redirect 하는 url을 변경해줘야함
-//    }
+    @Bean
+    public RouterFunction<ServerResponse> indexRouter() {
+        return RouterFunctions.route(GET("/"), request
+                -> ServerResponse.temporaryRedirect(URI.create("/security/login")).build()); //TODO 로그인 유무에 따라서 redirect 하는 url을 변경해줘야함
+    }
 }

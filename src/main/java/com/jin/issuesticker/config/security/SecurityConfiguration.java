@@ -46,9 +46,9 @@ public class SecurityConfiguration {
         .authorizeExchange()
         .pathMatchers(resources).permitAll()
         .pathMatchers("/security/**").permitAll()
-        .anyExchange().authenticated()
+        .anyExchange().authenticated();
 
-        .and()
+        http
         // 로그인 실패, 권한이 없을시 특정페이지로 redirect 가 아닌 실패 응답 (REST API를 사용하기 위함)
         .exceptionHandling()
         .authenticationEntryPoint((serverWebExchange, e) -> Mono.fromRunnable((() -> serverWebExchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED))))

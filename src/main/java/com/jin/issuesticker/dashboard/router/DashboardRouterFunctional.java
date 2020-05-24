@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
@@ -23,6 +24,7 @@ public class DashboardRouterFunctional {
      * @return
      */
     @Bean
+//    @PreAuthorize("hasRole('USER')")
     public RouterFunction<ServerResponse> personalDashboardRouterHtml(@Value("classpath:/public/index.html") Resource html) {
         return RouterFunctions.route(GET("/dashboard/personal"), request
                 -> ok().contentType(MediaType.TEXT_HTML).bodyValue(html));
