@@ -13,7 +13,7 @@ const inputNoValidateStatusTag = (onIdCheckAction, idOverlapCheck) => (
         rules={[
             {
                 required: true,
-                message: idOverlapCheck === 'error' ? '중복된 아이디가 존재 합니다.' : '필수 정보입니다.',
+                message: idOverlapCheck === 'error' ? '중복된 아이디가 존재 합니다.' : '필수 정보입니다.'
             }
         ]}
 

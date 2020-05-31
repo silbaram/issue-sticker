@@ -3,10 +3,12 @@ import TopLayoutComponent from '../components/TopLayoutComponent';
 import TopSiderLayoutComponent from '../components/TopSiderLayoutComponent';
 
 
-const LayoutContainer = () => {
+const LayoutContainer = ({children, tabIndex}) => {
 
     return (
-        <TopSiderLayoutComponent />
+        <TopLayoutComponent tabIndex={tabIndex}>
+            {children}
+        </TopLayoutComponent>
     );
 }
 
