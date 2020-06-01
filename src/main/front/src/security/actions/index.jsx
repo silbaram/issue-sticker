@@ -25,6 +25,5 @@ export function idCheckAction(data) {
  * @param {*} data 
  */
 export function login(data) {
-    console.log('data', data);
     return axios.post('/security/login', data);
 }

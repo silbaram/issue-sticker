@@ -21,11 +21,11 @@ const LayoutComponent = ({children, tabIndex}) => {
         <Layout className="layout" style={{ minHeight: '100vh' }}>
             <Header>
                 <div className="logo" />
-                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['{tabIndex}']}>
+                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
                     <Menu.Item key="1" icon={<DashboardFilled style={{ fontSize: '20px'}} />} style={{ width: '120px', textAlign: 'center'}}>대시보드</Menu.Item>
                     <Menu.Item key="2" icon={<FileTextFilled style={{ fontSize: '20px'}} />} style={{ width: '120px', textAlign: 'center'}}>이슈</Menu.Item>
                     <Menu.Item key="3" icon={<ScheduleFilled style={{ fontSize: '20px'}} />} style={{ width: '120px', textAlign: 'center'}}>배포</Menu.Item>
-                    <Menu.Item key="4" icon={<ProjectFilled style={{ fontSize: '20px'}} />} style={{ width: '120px', textAlign: 'center'}}> <Link to="/project/detail">프로젝트</Link> </Menu.Item>
+                    <Menu.Item key="4" icon={<ProjectFilled style={{ fontSize: '20px'}} />} style={{ width: '120px', textAlign: 'center'}}> <Link to="/projects">프로젝트</Link> </Menu.Item>
                     <Menu.Item key="5" icon={<ToolFilled style={{ fontSize: '20px'}} />} style={{ width: '120px', textAlign: 'center'}}>관리</Menu.Item>
                 </Menu>
             </Header>
