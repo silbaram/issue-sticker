@@ -6,7 +6,7 @@ import reactor.core.publisher.Mono;
 
 
 public interface UserService {
-    JoinUserDto saveUserInfo(Mono<JoinUserDto> userDto);
+    JoinUserDto saveUser(Mono<JoinUserDto> userDto);
     boolean joinCheckId(String id);
     Mono<UserDto> findByIdAndIsAccess(String id);
 }

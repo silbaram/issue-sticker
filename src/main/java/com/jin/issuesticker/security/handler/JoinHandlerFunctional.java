@@ -26,20 +26,20 @@ public class JoinHandlerFunctional {
      * @param serverRequest
      * @return
      */
-    public Mono<ServerResponse> join(ServerRequest serverRequest) {
+    public Mono<ServerResponse> saveJoinHandler(ServerRequest serverRequest) {
 
-        Mono<JoinUserDto> userDto = serverRequest.bodyToMono(JoinUserDto.class);
+        Mono<JoinUserDto> joinUserDtoMono = serverRequest.bodyToMono(JoinUserDto.class);
 
-        JoinUserDto saveUserDto = userService.saveUserInfo(userDto);
+        JoinUserDto saveUserDto = userService.saveUser(joinUserDtoMono);
 
         if(saveUserDto.isResult()) {
             return ServerResponse.ok()
                     .contentType(APPLICATION_JSON)
-                    .body(userDto, JoinUserDto.class);
+                    .body(saveUserDto, JoinUserDto.class);
         } else {
             return ServerResponse.badRequest()
                     .contentType(APPLICATION_JSON)
-                    .body(userDto, JoinUserDto.class);
+                    .body(saveUserDto, JoinUserDto.class);
         }
 
     }

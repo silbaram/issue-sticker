@@ -23,7 +23,7 @@ public class JoinRouterFunctional {
     @Bean
     public RouterFunction<ServerResponse> saveJoinRouter(JoinHandlerFunctional joinHandlerFunctional) {
 
-        return RouterFunctions.route(POST("/security/join").and(accept(APPLICATION_JSON)), joinHandlerFunctional::join);
+        return RouterFunctions.route(POST("/security/join").and(accept(APPLICATION_JSON)), joinHandlerFunctional::saveJoinHandler);
     }
 
 

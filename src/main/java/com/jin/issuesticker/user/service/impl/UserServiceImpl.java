@@ -31,11 +31,11 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 사용자 정보를 DB에 등록
-     * @param monoUserDto
+     * @param joinUserDtoMono
      */
     @Override
-    public JoinUserDto saveUserInfo(Mono<JoinUserDto> monoUserDto) {
-        JoinUserDto joinUserDto = monoUserDto.block();
+    public JoinUserDto saveUser(Mono<JoinUserDto> joinUserDtoMono) {
+        JoinUserDto joinUserDto = joinUserDtoMono.block();
 
         UserEntity userEntity = new UserEntity();
         userEntity.setId(joinUserDto.getId());
