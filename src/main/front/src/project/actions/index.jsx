@@ -6,5 +6,11 @@ import axios from 'axios';
  * @param {*} data 
  */
 export function projectAction(data) {
-    return axios.post('/project', data);
+    return axios.post('/project', data, {
+        headers: {
+            'authorization': 'Bearer ',
+            'Accept' : 'application/json',
+            'Content-Type': 'application/json'
+        }
+    });
 }
