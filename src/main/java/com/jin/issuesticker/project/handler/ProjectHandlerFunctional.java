@@ -3,6 +3,7 @@ package com.jin.issuesticker.project.handler;
 import com.jin.issuesticker.project.dto.ProjectDto;
 import com.jin.issuesticker.project.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -30,7 +31,7 @@ public class ProjectHandlerFunctional {
         if (saveResult) {
             return ServerResponse.ok().body(BodyInserters.fromValue("success"));
         } else {
-            return ServerResponse.ok().body(BodyInserters.fromValue("error"));
+            return ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BodyInserters.fromValue("error"));
         }
 
     }

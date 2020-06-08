@@ -1,10 +1,9 @@
 import React from 'react';
 import { Form, Input, Button, Select, Divider, PageHeader, Space } from 'antd';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
-import { Link } from 'react-router-dom';
 
 
-const ProjectDetailComponent = (props) => {
+const ProjectDetailComponent = (props, { history }) => {
 
     const { onProjectAction } = props;
     const { Option, OptGroup } = Select
@@ -107,7 +106,7 @@ const ProjectDetailComponent = (props) => {
 
                 <Form.Item {...tailLayout}>
                     <Space>
-                        <Button type="primary" htmlType="submit" >
+                        <Button type="primary" htmlType="submit">
                         생성
                         </Button>
                         <Button type="ghost">

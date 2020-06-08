@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -26,9 +29,10 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectDto projectDto = monoProjectDto.block();
 
         ProjectEntity projectEntity = new ProjectEntity();
-        projectEntity.setKey(projectDto.getKey());
+        projectEntity.setProjectCode(projectDto.getKey());
         projectEntity.setTitle(projectDto.getTitle());
         projectEntity.setDescription(projectDto.getDescription());
+        projectEntity.setRegisteredDate(Timestamp.valueOf(LocalDateTime.now()));
 
         try {
             projectEntityRepository.save(projectEntity);

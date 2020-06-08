@@ -18,17 +18,17 @@ const projectAction = data => {
     })
     .catch(error => {
         Modal.error({
-            title: "회원 가입 실페",
+            title: "프로젝트 생성 실페",
             content: "계속 장애 발생시 운영자에게 연락 바랍니다."
         });
     });
 }
 
 
-const ProjectDetailContainer = ({tabIndex}) => {
+const ProjectDetailContainer = (props) => {
 
     return (
-        <LayoutContainer tabIndex={tabIndex}>
+        <LayoutContainer tabIndex={props.tabIndex}>
             <ProjectDetailComponent onProjectAction={projectAction} />
         </LayoutContainer>
     );

@@ -43,7 +43,6 @@ const JoinContainer = () => {
         
         service.idCheckAction(data)
         .then(response => {
-            console.log("response.data", response.data);
             setIdOverlapCheck(response.data);
         });
     }

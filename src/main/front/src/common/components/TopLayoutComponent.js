@@ -21,7 +21,7 @@ const LayoutComponent = ({children, tabIndex}) => {
         <Layout className="layout" style={{ minHeight: '100vh' }}>
             <Header>
                 <div className="logo" />
-                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
+                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[{tabIndex}]}>
                     <Menu.Item key="1" icon={<DashboardFilled style={{ fontSize: '20px'}} />} style={{ width: '120px', textAlign: 'center'}}>대시보드</Menu.Item>
                     <Menu.Item key="2" icon={<FileTextFilled style={{ fontSize: '20px'}} />} style={{ width: '120px', textAlign: 'center'}}>이슈</Menu.Item>
                     <Menu.Item key="3" icon={<ScheduleFilled style={{ fontSize: '20px'}} />} style={{ width: '120px', textAlign: 'center'}}>배포</Menu.Item>
