@@ -1,10 +1,9 @@
-import React, { useReducer } from 'react';
+import React, { useContext } from 'react';
 import LayoutContainer from '../../common/containers/LayoutContainer';
 import ProjectDetailComponent from '../components/ProjectDetailComponent';
 import { Modal } from 'antd';
 import * as service from '../actions';
-
-import * as userLoginInfo from '../../common/reducers/actions'
+import { store } from '../../common/reducers/store/store';
 
 
 /**
@@ -29,8 +28,8 @@ const projectAction = data => {
 
 const ProjectDetailContainer = (props) => {
 
-    // const [userInfo, dispatchUserInfo] = useReducer(userLoginInfo.tokenReducer, userLoginInfo.initialTokenState)
-// console.log("userInfo 2", userInfo);
+    const globalState = useContext(store);
+    console.log("ProjectDetailContainer > globalState", globalState);
 
     return (
         <LayoutContainer tabIndex={props.tabIndex}>
