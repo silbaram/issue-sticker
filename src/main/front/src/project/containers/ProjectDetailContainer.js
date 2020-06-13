@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import LayoutContainer from '../../common/containers/LayoutContainer';
 import ProjectDetailComponent from '../components/ProjectDetailComponent';
 import { Modal } from 'antd';
 import * as service from '../actions';
-import { store } from '../../common/reducers/store/store';
 
 
 /**
@@ -28,12 +27,32 @@ const projectAction = data => {
 
 const ProjectDetailContainer = (props) => {
 
-    const globalState = useContext(store);
-    console.log("ProjectDetailContainer > globalState", globalState);
+    const [projectCodeOverlapCheck, setProjectCodeOverlapCheck] = useState(""); //회원 중복 체크 여부 상태값 : '', 'error', 'validating'
+
+
+    /**
+     *  프로젝트 생성시 프로젝트 코드 중복 체크
+     * @param {*} data 
+     */
+    const projectCodeCheckAction = (data, userToken) => {
+        if (data === "") {
+            setProjectCodeOverlapCheck("");
+            return false;
+        }
+        
+        service.projectCodeCheckAction(data, userToken)
+        .then(response => {
+            setProjectCodeOverlapCheck(response.data);
+        });
+    }
+
 
     return (
         <LayoutContainer tabIndex={props.tabIndex}>
-            <ProjectDetailComponent onProjectAction={projectAction} />
+            <ProjectDetailComponent 
+            onProjectAction={projectAction}
+            onProjectCodeCheckAction={projectCodeCheckAction}
+            projectCodeOverlapCheck={projectCodeOverlapCheck} />
         </LayoutContainer>
     );
 }

@@ -29,7 +29,7 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectDto projectDto = monoProjectDto.block();
 
         ProjectEntity projectEntity = new ProjectEntity();
-        projectEntity.setProjectCode(projectDto.getKey());
+        projectEntity.setProjectCode(projectDto.getCode());
         projectEntity.setTitle(projectDto.getTitle());
         projectEntity.setDescription(projectDto.getDescription());
         projectEntity.setRegisteredDate(Timestamp.valueOf(LocalDateTime.now()));
@@ -41,5 +41,18 @@ public class ProjectServiceImpl implements ProjectService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+
+    /**
+     * 프로젝트 생성시 프로젝트 코드 중복 체크
+     * @param projectCode
+     * @return
+     */
+    @Override
+    public boolean checkProjectCode(String projectCode) {
+        Long count = projectEntityRepository.countByProjectCode(projectCode);
+
+        return count > 0 ? false : true;
     }
 }

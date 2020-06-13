@@ -14,11 +14,11 @@ const StateProvider = ({children}) => {
             case storeAction.TOKEN_RESET: {
                 return initialTokenState
             }
-            case storeAction.SET_IS_LOGIN: {
-                return { ...state, isLogin: action.isLogin };
-            }
             case storeAction.SET_LOGIN_TOKEN: {
                 return { ...state, isLogin: true, token: action.token};
+            }
+            case storeAction.SET_LOGOUT_TOKEN: {
+                return { ...state, isLogin: false, token: ""};
             }
             default: {
                 throw new Error(`unexpected action.type: ${action.type}`);

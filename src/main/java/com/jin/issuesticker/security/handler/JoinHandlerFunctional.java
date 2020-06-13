@@ -56,7 +56,7 @@ public class JoinHandlerFunctional {
 
         boolean checkResult = userService.joinCheckId(checkId);
 
-        if(checkResult) {
+        if (checkResult) {
             return ServerResponse.ok().body(BodyInserters.fromValue("success"));
         } else {
             return ServerResponse.ok().body(BodyInserters.fromValue("error"));

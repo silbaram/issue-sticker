@@ -64,11 +64,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean joinCheckId(String id) {
         Long count = userEntityRepository.countById(id);
-        if (count > 0) {
-            return false;
-        } else {
-            return true;
-        }
+
+        return count > 0 ? false : true;
     }
 
 

@@ -16,7 +16,6 @@ const { Header, Content, Footer } = Layout;
 
 const LayoutComponent = ({children, tabIndex}) => {
 
-    console.log("LayoutComponent", tabIndex);
     return (
         <Layout className="layout" style={{ minHeight: '100vh' }}>
             <Header>

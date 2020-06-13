@@ -33,6 +33,23 @@ public class ProjectHandlerFunctional {
         } else {
             return ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BodyInserters.fromValue("error"));
         }
+    }
 
+
+    /**
+     * 프로젝트 생성시 프로젝트 코드 중복 체크
+     * @param serverRequest
+     * @return
+     */
+    public Mono<ServerResponse> uniqueCodeValidation(ServerRequest serverRequest) {
+        String checkCode = serverRequest.pathVariable("code");
+
+        boolean checkResult = projectService.checkProjectCode(checkCode);
+
+        if (checkResult) {
+            return ServerResponse.ok().body(BodyInserters.fromValue("success"));
+        } else {
+            return ServerResponse.ok().body(BodyInserters.fromValue("error"));
+        }
     }
 }

@@ -5,6 +5,7 @@ import * as service from '../actions';
 import { store } from '../../common/reducers/store/store';
 import * as storeAction from "../../common/reducers/action/action"
 
+
 const LoginContainer = ({ history }) => {
 
     const globalState = useContext(store);
@@ -14,6 +15,10 @@ const LoginContainer = ({ history }) => {
         message.error(messageText);
     }
     
+    /**
+     * 서버에 로그인 요청
+     * @param {*} data 
+     */
     const loginAction = data => {
         service.login(data)
         .then(response => {

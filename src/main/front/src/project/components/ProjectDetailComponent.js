@@ -1,12 +1,61 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Form, Input, Button, Select, Divider, PageHeader, Space } from 'antd';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
+
+import { store } from '../../common/reducers/store/store';
+
+
+const inputNoValidateStatusTag = (onProjectCodeCheckAction, projectCodeOverlapCheck, userToken) => (
+    <Form.Item
+        label="프로젝트 코드"
+        name="code"
+        rules={[
+            {
+                required: true,
+                message: projectCodeOverlapCheck === 'error' ? '중복된 아이디가 존재 합니다.' : '필수 정보입니다.'
+            }
+        ]}
+
+        hasFeedback
+    >
+
+        <Input 
+            size="large"
+            onBlur={ () => onProjectCodeCheckAction(document.getElementById("projectForm_code").value, userToken)}
+        />
+    </Form.Item>
+);
+
+const inputValidateStatusTag = (onProjectCodeCheckAction, projectCodeOverlapCheck, userToken) => (
+    <Form.Item
+        label="프로젝트 코드"
+        name="code"
+            rules={[
+                {
+                    required: true,
+                    message: '필수 정보입니다.'
+                }
+            ]}
+            
+            validateStatus={projectCodeOverlapCheck}
+            help={projectCodeOverlapCheck === "success" ? "사용 가능한 코드 입니다." : "중복된 코드가 존재 합니다."}
+            hasFeedback
+        >
+
+        <Input 
+            size="large"
+            onBlur={ () => onProjectCodeCheckAction(document.getElementById("projectForm_code").value, userToken)}
+        />
+    </Form.Item>
+);
 
 
 const ProjectDetailComponent = (props, { history }) => {
 
-    const { onProjectAction } = props;
+    const { onProjectAction, onProjectCodeCheckAction, projectCodeOverlapCheck } = props;
     const { Option, OptGroup } = Select
+    // 스토어 획득
+    const globalState = useContext(store);
 
     const layout = {
         labelCol: {
@@ -30,7 +79,9 @@ const ProjectDetailComponent = (props, { history }) => {
     }
 
     const onFinish = values => {
-        onProjectAction(values);
+        if(projectCodeOverlapCheck === "success") {
+            onProjectAction(values);
+        }
     };
 
 
@@ -47,25 +98,11 @@ const ProjectDetailComponent = (props, { history }) => {
 
             <Form
                 {...layout}
+                name="projectForm"
                 onFinish={onFinish}
             >
-                <Form.Item
-                    label="프로젝트 코드"
-                    name="key"
-                    rules={[
-                        {
-                            required: true,
-                            message: '필수 정보입니다.'
-                        }
-                    ]}
 
-                    hasFeedback
-                >
-
-                    <Input 
-                        size="large"
-                    />
-                </Form.Item>
+                {projectCodeOverlapCheck === "" ? inputNoValidateStatusTag(onProjectCodeCheckAction, projectCodeOverlapCheck, globalState.state.token) : inputValidateStatusTag(onProjectCodeCheckAction, projectCodeOverlapCheck, globalState.state.token)}
 
                 <Form.Item
                     label="프로젝트 제목"

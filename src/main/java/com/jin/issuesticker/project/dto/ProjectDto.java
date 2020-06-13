@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class ProjectDto {
-    private String key;
+    private String code;
     private String title;
     private String description;
 }
