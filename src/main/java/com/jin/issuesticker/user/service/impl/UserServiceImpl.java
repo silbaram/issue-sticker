@@ -14,6 +14,8 @@ import reactor.core.publisher.Mono;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -90,5 +92,21 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         return Mono.just(userDto);
+    }
+
+
+    /**
+     * 아이디 또는 사용자 이름으로 user정보 검색
+     * @param id
+     * @param username
+     * @return
+     */
+    @Override
+    public List<UserDto> findByIdOrUsernameLike(String id, String username) {
+        List<Mono<UserEntity>> userDtoList = userEntityRepository.findByIdOrUsernameLike(id, username);
+
+        return userDtoList.stream()
+                .map(userEntityMono -> UserDto.builder().username(userEntityMono.block().getUsername()).build())
+                .collect(Collectors.toList());
     }
 }
