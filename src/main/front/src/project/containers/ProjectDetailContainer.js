@@ -29,7 +29,7 @@ const ProjectDetailContainer = (props) => {
 
     const [projectCodeOverlapCheck, setProjectCodeOverlapCheck] = useState(""); //회원 중복 체크 여부 상태값 : '', 'error', 'validating'
 
-
+    console.log("localStorage value", localStorage.getItem("userToken"));
     /**
      *  프로젝트 생성시 프로젝트 코드 중복 체크
      * @param {*} data 
