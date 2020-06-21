@@ -32,8 +32,13 @@ public class LoginRouterFunctional {
     }
 
 
+    /**
+     * 사용자 로그인 요청
+     * @param loginHandlerFunctional
+     * @return
+     */
     @Bean
     public RouterFunction<ServerResponse> loginRouter(LoginHandlerFunctional loginHandlerFunctional) {
-        return RouterFunctions.route(POST("/security/login"), loginHandlerFunctional::login);
+        return RouterFunctions.route(POST("/security/login"), loginHandlerFunctional::loginHandler);
     }
 }

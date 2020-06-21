@@ -1,20 +1,22 @@
 import React, { useContext } from 'react';
 import LoginComponent from '../components/LoginComponent';
 import { message } from 'antd';
+
 import * as service from '../actions';
-import { store } from '../../common/reducers/store/store';
+
 import * as storeAction from "../../common/reducers/action/action"
+import { store } from '../../common/reducers/store/store';
 
 
 const LoginContainer = ({ history }) => {
 
-    const globalState = useContext(store);
-    const { dispatch } = globalState;
-
+    const globalStore = useContext(store);
+    const { dispatch } = globalStore;
     const topMessage = messageText => {
         message.error(messageText);
     }
-    
+
+
     /**
      * 서버에 로그인 요청
      * @param {*} data 
@@ -22,6 +24,7 @@ const LoginContainer = ({ history }) => {
     const loginAction = data => {
         service.login(data)
         .then(response => {
+
             dispatch({type: storeAction.SET_LOGIN_TOKEN, token: response.data.token});
 
             // TODO 페이지 이동 임시로 프로젝트 상세로 변경

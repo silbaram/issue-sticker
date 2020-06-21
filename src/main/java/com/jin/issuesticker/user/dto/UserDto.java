@@ -38,7 +38,8 @@ public class UserDto implements UserDetails {
     private boolean active = true;
 
     @Builder
-    public UserDto(String id, String password, String username, String email, int isAccess, List<String> roles) {
+    public UserDto(Long idx, String id, String password, String username, String email, int isAccess, List<String> roles) {
+        this.idx = idx;
         this.id = id;
         this.password = password;
         this.username = username;

@@ -26,7 +26,7 @@ public class LoginHandlerFunctional {
     private PBKDF2Encoder passwordEncoder;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
 
     /**
@@ -34,7 +34,7 @@ public class LoginHandlerFunctional {
      * @param serverRequest
      * @return
      */
-    public Mono<ServerResponse> login(ServerRequest serverRequest) {
+    public Mono<ServerResponse> loginHandler(ServerRequest serverRequest) {
 
         UserDto requestUserDto = serverRequest.bodyToMono(UserDto.class).block();
 

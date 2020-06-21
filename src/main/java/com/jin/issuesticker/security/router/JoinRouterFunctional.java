@@ -33,8 +33,8 @@ public class JoinRouterFunctional {
      * @return
      */
     @Bean
-    public RouterFunction<ServerResponse> uniqueIdValidation(JoinHandlerFunctional joinHandlerFunctional) {
+    public RouterFunction<ServerResponse> uniqueIdValidationRouter(JoinHandlerFunctional joinHandlerFunctional) {
 
-        return RouterFunctions.route(GET("/security/validation/{id}"), joinHandlerFunctional::uniqueIdValidation);
+        return RouterFunctions.route(GET("/security/validation/{id}"), joinHandlerFunctional::uniqueIdValidationHandler);
     }
 }

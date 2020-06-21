@@ -1,11 +1,9 @@
-import React, { useContext } from 'react';
-import { Form, Input, Button, Select, Divider, PageHeader, Space } from 'antd';
-import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
-
-import { store } from '../../common/reducers/store/store';
+import React from 'react';
+import { Form, Input, Button, Select, Divider, PageHeader, Space, Spin } from 'antd';
+import 'antd/dist/antd.css';
 
 
-const inputNoValidateStatusTag = (onProjectCodeCheckAction, projectCodeOverlapCheck, userToken) => (
+const inputNoValidateStatusTag = (onProjectCodeCheckAction, projectCodeOverlapCheck) => (
     <Form.Item
         label="프로젝트 코드"
         name="code"
@@ -21,12 +19,12 @@ const inputNoValidateStatusTag = (onProjectCodeCheckAction, projectCodeOverlapCh
 
         <Input 
             size="large"
-            onBlur={ () => onProjectCodeCheckAction(document.getElementById("projectForm_code").value, userToken)}
+            onBlur={ () => onProjectCodeCheckAction(document.getElementById("projectForm_code").value)}
         />
     </Form.Item>
 );
 
-const inputValidateStatusTag = (onProjectCodeCheckAction, projectCodeOverlapCheck, userToken) => (
+const inputValidateStatusTag = (onProjectCodeCheckAction, projectCodeOverlapCheck) => (
     <Form.Item
         label="프로젝트 코드"
         name="code"
@@ -44,7 +42,7 @@ const inputValidateStatusTag = (onProjectCodeCheckAction, projectCodeOverlapChec
 
         <Input 
             size="large"
-            onBlur={ () => onProjectCodeCheckAction(document.getElementById("projectForm_code").value, userToken)}
+            onBlur={ () => onProjectCodeCheckAction(document.getElementById("projectForm_code").value)}
         />
     </Form.Item>
 );
@@ -52,10 +50,12 @@ const inputValidateStatusTag = (onProjectCodeCheckAction, projectCodeOverlapChec
 
 const ProjectDetailComponent = (props, { history }) => {
 
-    const { onProjectAction, onProjectCodeCheckAction, projectCodeOverlapCheck } = props;
-    const { Option, OptGroup } = Select
-    // 스토어 획득
-    const globalState = useContext(store);
+    const { onProjectCodeCheckAction,
+            onProjectInUsersAction,
+            projectUsersHandleChange,
+            onProjectCreateAction,
+            projectCodeOverlapCheck } = props;
+    const { Option } = Select
 
     const layout = {
         labelCol: {
@@ -80,7 +80,7 @@ const ProjectDetailComponent = (props, { history }) => {
 
     const onFinish = values => {
         if(projectCodeOverlapCheck === "success") {
-            onProjectAction(values);
+            onProjectCreateAction(values);
         }
     };
 
@@ -102,8 +102,7 @@ const ProjectDetailComponent = (props, { history }) => {
                 onFinish={onFinish}
             >
 
-                {projectCodeOverlapCheck === "" ? inputNoValidateStatusTag(onProjectCodeCheckAction, projectCodeOverlapCheck, globalState.state.token) : inputValidateStatusTag(onProjectCodeCheckAction, projectCodeOverlapCheck, globalState.state.token)}
-
+                {projectCodeOverlapCheck === "" ? inputNoValidateStatusTag(onProjectCodeCheckAction, projectCodeOverlapCheck) : inputValidateStatusTag(onProjectCodeCheckAction, projectCodeOverlapCheck)}
                 <Form.Item
                     label="프로젝트 제목"
                     name="title"
@@ -124,18 +123,23 @@ const ProjectDetailComponent = (props, { history }) => {
                     />
                 </Form.Item>
 
-
                 <Form.Item
                     label="프로젝트 팀원"
                     name="users"
                 >
-                    <Select mode="multiple" size="large">
-                        <OptGroup label="Manager">
+                    <Select 
+                        mode="multiple"
+                        labelInValue
+                        notFoundContent={projectUsersHandleChange.fetching ? <Spin size="small" /> : null}
+                        size="large"
+                        onSearch={onProjectInUsersAction}
+                    >
+                        {/* <OptGroup label="Manager">
                             {children}
                         </OptGroup>
                         <OptGroup label="Engineer">
                             <Option value="Yiminghe">yiminghe</Option>
-                        </OptGroup>
+                        </OptGroup> */}
                     </Select>
                 </Form.Item>
 

@@ -2,6 +2,7 @@ package com.jin.issuesticker.user.repository;
 
 import com.jin.issuesticker.user.models.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
     Long countById(String id);
 
     /**
-     * 회원 로그인시 user 정보 검색
+     * 사용자 로그인시 user 정보 검색
      * @param id
      * @param isAccess
      * @return
@@ -28,10 +29,10 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
     UserEntity findByIdAndIsAccess(String id, int isAccess);
 
     /**
-     * 아이지 또는 사용자 이름으로 user 정보 검색
+     * 아이디 또는 사용자 이름으로 user 정보 검색
      * @param id
      * @param username
      * @return
      */
-    List<Mono<UserEntity>> findByIdOrUsernameLike(String id, String username);
+    List<UserEntity> findByIdLikeOrUsernameLike(String id, String username);
 }

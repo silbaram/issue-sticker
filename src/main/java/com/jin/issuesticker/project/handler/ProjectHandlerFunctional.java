@@ -41,7 +41,7 @@ public class ProjectHandlerFunctional {
      * @param serverRequest
      * @return
      */
-    public Mono<ServerResponse> uniqueCodeValidation(ServerRequest serverRequest) {
+    public Mono<ServerResponse> uniqueCodeValidationHandler(ServerRequest serverRequest) {
         String checkCode = serverRequest.pathVariable("code");
 
         boolean checkResult = projectService.checkProjectCode(checkCode);

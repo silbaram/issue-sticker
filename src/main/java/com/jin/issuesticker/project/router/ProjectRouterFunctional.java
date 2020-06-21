@@ -33,8 +33,8 @@ public class ProjectRouterFunctional {
      * @return
      */
     @Bean
-    public RouterFunction<ServerResponse> uniqueCodeValidation(ProjectHandlerFunctional projectHandlerFunctional) {
+    public RouterFunction<ServerResponse> uniqueCodeValidationRouter(ProjectHandlerFunctional projectHandlerFunctional) {
 
-        return RouterFunctions.route(GET("/project/validation/{code}"), projectHandlerFunctional::uniqueCodeValidation);
+        return RouterFunctions.route(GET("/project/validation/{code}"), projectHandlerFunctional::uniqueCodeValidationHandler);
     }
 }

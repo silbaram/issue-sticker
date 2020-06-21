@@ -7,8 +7,7 @@ import axios from 'axios';
  * @return true:중복, false:사용가능
  */
 export function projectCodeCheckAction(data, userToken) {
-console.log("data", data);
-console.log("token", userToken);
+
     const defaultOptions = {
         headers: {
             Authorization: `Bearer ` + userToken,
@@ -20,14 +19,30 @@ console.log("token", userToken);
 
 
 /**
- * 프로젝트 생성 요청
+ * 프로젝트 접근 권한 관리를 위한 사용자 검색
  * @param {*} data 
  */
-export function projectAction(data) {
+export function projectInUsersAction(userToken, value) {
 
     const defaultOptions = {
         headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwc2oiLCJpYXQiOjE1OTE2MjEyMTgsImV4cCI6MTU5MTY1MDAxOH0.tMN-Zgm_tW6Yj6tC5IsmVtJbumoVzPPppgDxPGNtjbSuIXsC-5tY1WYkFpvMnU7l23MkQma6UyIYpiw1QLeY1A`,
+            Authorization: `Bearer ` + userToken,
+        },
+    };
+console.log(value);
+    return axios.get('/project/users?value=' + value, { ...defaultOptions });
+}
+
+
+/**
+ * 프로젝트 생성 요청
+ * @param {*} data 
+ */
+export function projectCreateAction(data, userToken) {
+
+    const defaultOptions = {
+        headers: {
+            Authorization: `Bearer ` + userToken,
         },
     };
 

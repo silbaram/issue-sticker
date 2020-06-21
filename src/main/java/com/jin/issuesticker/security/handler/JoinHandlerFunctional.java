@@ -1,24 +1,21 @@
 package com.jin.issuesticker.security.handler;
 
-import com.jin.issuesticker.security.auth.PBKDF2Encoder;
 import com.jin.issuesticker.user.dto.JoinUserDto;
-import com.jin.issuesticker.user.dto.UserDto;
 import com.jin.issuesticker.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-
 
 @Component
 public class JoinHandlerFunctional {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
 
     /**
@@ -34,11 +31,11 @@ public class JoinHandlerFunctional {
 
         if(saveUserDto.isResult()) {
             return ServerResponse.ok()
-                    .contentType(APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_JSON)
                     .body(Mono.just(saveUserDto), JoinUserDto.class);
         } else {
             return ServerResponse.badRequest()
-                    .contentType(APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_JSON)
                     .body(Mono.just(saveUserDto), JoinUserDto.class);
         }
 
@@ -50,7 +47,7 @@ public class JoinHandlerFunctional {
      * @param serverRequest
      * @return
      */
-    public Mono<ServerResponse> uniqueIdValidation(ServerRequest serverRequest) {
+    public Mono<ServerResponse> uniqueIdValidationHandler(ServerRequest serverRequest) {
 
         String checkId = serverRequest.pathVariable("id");
 

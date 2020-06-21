@@ -10,10 +10,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,12 +85,15 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
+        List<String> roleList = new ArrayList<>();
+        roleList.add("USER");
         UserDto userDto = UserDto.builder()
                 .id(userEntity.getId())
                 .password(userEntity.getPassword())
                 .username(userEntity.getUsername())
                 .email(userEntity.getEmail())
                 .isAccess(0)
+                .roles(roleList)
                 .build();
 
         return Mono.just(userDto);
@@ -96,17 +101,19 @@ public class UserServiceImpl implements UserService {
 
 
     /**
-     * 아이디 또는 사용자 이름으로 user정보 검색
+     * 아이디 또는 이름 으로 사용자 정보 검색
      * @param id
      * @param username
      * @return
      */
     @Override
-    public List<UserDto> findByIdOrUsernameLike(String id, String username) {
-        List<Mono<UserEntity>> userDtoList = userEntityRepository.findByIdOrUsernameLike(id, username);
+    public Flux<UserDto> findByIdLikeOrUsernameLike(String id, String username) {
+        List<UserEntity> userEntityList = userEntityRepository.findByIdLikeOrUsernameLike(id, username);
 
-        return userDtoList.stream()
-                .map(userEntityMono -> UserDto.builder().username(userEntityMono.block().getUsername()).build())
+        List<UserDto> userDtoList = userEntityList.stream()
+                .map(userEntityMono -> UserDto.builder().idx(userEntityMono.getIdx()).username(userEntityMono.getUsername()).build())
                 .collect(Collectors.toList());
+
+        return Flux.fromIterable(userDtoList);
     }
 }
