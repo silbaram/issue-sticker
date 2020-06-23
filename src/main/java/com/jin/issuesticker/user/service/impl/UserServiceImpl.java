@@ -2,6 +2,7 @@ package com.jin.issuesticker.user.service.impl;
 
 import com.jin.issuesticker.security.auth.PBKDF2Encoder;
 import com.jin.issuesticker.user.dto.JoinUserDto;
+import com.jin.issuesticker.user.dto.ProjectInUserDto;
 import com.jin.issuesticker.user.dto.UserDto;
 import com.jin.issuesticker.user.models.UserEntity;
 import com.jin.issuesticker.user.repository.UserEntityRepository;
@@ -107,13 +108,13 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public Flux<UserDto> findByIdLikeOrUsernameLike(String id, String username) {
+    public Flux<ProjectInUserDto> findByIdLikeOrUsernameLike(String id, String username) {
         List<UserEntity> userEntityList = userEntityRepository.findByIdLikeOrUsernameLike(id, username);
 
-        List<UserDto> userDtoList = userEntityList.stream()
-                .map(userEntityMono -> UserDto.builder().idx(userEntityMono.getIdx()).username(userEntityMono.getUsername()).build())
+        List<ProjectInUserDto> projectInUserDtoList = userEntityList.stream()
+                .map(userEntityMono -> ProjectInUserDto.builder().idx(userEntityMono.getIdx()).username(userEntityMono.getUsername()).build())
                 .collect(Collectors.toList());
 
-        return Flux.fromIterable(userDtoList);
+        return Flux.fromIterable(projectInUserDtoList);
     }
 }

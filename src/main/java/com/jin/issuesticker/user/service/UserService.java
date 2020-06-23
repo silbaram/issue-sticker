@@ -1,6 +1,7 @@
 package com.jin.issuesticker.user.service;
 
 import com.jin.issuesticker.user.dto.JoinUserDto;
+import com.jin.issuesticker.user.dto.ProjectInUserDto;
 import com.jin.issuesticker.user.dto.UserDto;
 import com.jin.issuesticker.user.models.UserEntity;
 import reactor.core.publisher.Flux;
@@ -13,5 +14,5 @@ public interface UserService {
     JoinUserDto saveUser(Mono<JoinUserDto> userDto);
     boolean joinCheckId(String id);
     Mono<UserDto> findByIdAndIsAccess(String id);
-    Flux<UserDto> findByIdLikeOrUsernameLike(String id, String username);
+    Flux<ProjectInUserDto> findByIdLikeOrUsernameLike(String id, String username);
 }

@@ -1,5 +1,6 @@
 package com.jin.issuesticker.user.handler;
 
+import com.jin.issuesticker.user.dto.ProjectInUserDto;
 import com.jin.issuesticker.user.dto.UserDto;
 import com.jin.issuesticker.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class UserHandlerFunctional {
         Optional<String> selectValue = serverRequest.queryParam("value");
 
         if (selectValue.isPresent()) {
-            Flux<UserDto> userDtoFlux = userService.findByIdLikeOrUsernameLike(selectValue.get(), selectValue.get());
-            return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(userDtoFlux, UserDto.class);
+            Flux<ProjectInUserDto> projectInUserDtoFlux = userService.findByIdLikeOrUsernameLike(selectValue.get(), selectValue.get());
+            return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(projectInUserDtoFlux, ProjectInUserDto.class);
         } else {
             return ServerResponse.badRequest().contentType(MediaType.APPLICATION_JSON).bodyValue("검색 조건을 확인 해주세요.");
         }
