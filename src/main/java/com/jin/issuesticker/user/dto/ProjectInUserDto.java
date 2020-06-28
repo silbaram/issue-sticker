@@ -2,20 +2,17 @@ package com.jin.issuesticker.user.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.List;
 
 
 @Data
 public class ProjectInUserDto {
 
-    @Getter @Setter
     private Long idx;
-
-    @Getter @Setter
     private String username;
+
+    //프로젝트 등록시 사용자 정보
+    private Long key;
+    private String label;
 
 
     @Builder

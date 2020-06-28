@@ -14,5 +14,5 @@ public interface UserService {
     JoinUserDto saveUser(Mono<JoinUserDto> userDto);
     boolean joinCheckId(String id);
     Mono<UserDto> findByIdAndIsAccess(String id);
-    Flux<ProjectInUserDto> findByIdLikeOrUsernameLike(String id, String username);
+    Flux<ProjectInUserDto> findByIdContainingOrUsernameContaining(String id, String username);
 }

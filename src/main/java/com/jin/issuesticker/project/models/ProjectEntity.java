@@ -1,9 +1,12 @@
 package com.jin.issuesticker.project.models;
 
+import com.jin.issuesticker.common.models.UserToProjectEntity;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -12,20 +15,23 @@ import java.sql.Timestamp;
 public class ProjectEntity {
 
     @Id @Column(name = "idx") @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long idx;
+    private Long idx;
 
     @Column(name = "project_code")
-    String projectCode;
+    private String projectCode;
 
     @Column(name = "title")
-    String title;
+    private String title;
 
     @Column(name = "description")
-    String description;
+    private String description;
 
     @Column(name = "registered_date")
-    Timestamp registeredDate;
+    private Timestamp registeredDate;
 
     @Column(name = "modified_date")
-    Timestamp modifiedDate;
+    private Timestamp modifiedDate;
+
+    @OneToMany(mappedBy = "projectEntity", fetch = FetchType.LAZY)
+    private List<UserToProjectEntity> userToProjectEntityList = new ArrayList<>();
 }

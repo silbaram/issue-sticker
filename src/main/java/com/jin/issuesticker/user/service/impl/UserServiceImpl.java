@@ -108,8 +108,8 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public Flux<ProjectInUserDto> findByIdLikeOrUsernameLike(String id, String username) {
-        List<UserEntity> userEntityList = userEntityRepository.findByIdLikeOrUsernameLike(id, username);
+    public Flux<ProjectInUserDto> findByIdContainingOrUsernameContaining(String id, String username) {
+        List<UserEntity> userEntityList = userEntityRepository.findByIdContainingOrUsernameContaining(id, username);
 
         List<ProjectInUserDto> projectInUserDtoList = userEntityList.stream()
                 .map(userEntityMono -> ProjectInUserDto.builder().idx(userEntityMono.getIdx()).username(userEntityMono.getUsername()).build())

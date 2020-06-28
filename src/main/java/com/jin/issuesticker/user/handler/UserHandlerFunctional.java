@@ -31,7 +31,7 @@ public class UserHandlerFunctional {
         Optional<String> selectValue = serverRequest.queryParam("value");
 
         if (selectValue.isPresent()) {
-            Flux<ProjectInUserDto> projectInUserDtoFlux = userService.findByIdLikeOrUsernameLike(selectValue.get(), selectValue.get());
+            Flux<ProjectInUserDto> projectInUserDtoFlux = userService.findByIdContainingOrUsernameContaining(selectValue.get(), selectValue.get());
             return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(projectInUserDtoFlux, ProjectInUserDto.class);
         } else {
             return ServerResponse.badRequest().contentType(MediaType.APPLICATION_JSON).bodyValue("검색 조건을 확인 해주세요.");

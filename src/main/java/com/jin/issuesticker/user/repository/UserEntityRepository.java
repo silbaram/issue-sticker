@@ -34,5 +34,12 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
      * @param username
      * @return
      */
-    List<UserEntity> findByIdLikeOrUsernameLike(String id, String username);
+    List<UserEntity> findByIdContainingOrUsernameContaining(String id, String username);
+
+    /**
+     * 프로젝트에 연동할 사용자들 정보 검색
+     * @param idx
+     * @return
+     */
+    List<UserEntity> findByIdxIn(List<Long> idx);
 }

@@ -1,15 +1,24 @@
 package com.jin.issuesticker.project.service.impl;
 
+import com.jin.issuesticker.common.models.UserToProjectEntity;
+import com.jin.issuesticker.common.models.UserToProjectEntityPK;
+import com.jin.issuesticker.common.repository.UserToProjectEntityRepository;
 import com.jin.issuesticker.project.dto.ProjectDto;
 import com.jin.issuesticker.project.models.ProjectEntity;
 import com.jin.issuesticker.project.repository.ProjectEntityRepository;
 import com.jin.issuesticker.project.service.ProjectService;
+import com.jin.issuesticker.user.models.UserEntity;
+import com.jin.issuesticker.user.repository.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -18,6 +27,12 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private ProjectEntityRepository projectEntityRepository;
 
+    @Autowired
+    private UserEntityRepository userEntityRepository;
+
+    @Autowired
+    private UserToProjectEntityRepository userToProjectEntityRepository;
+
 
     /**
      * 프로젝트 생성
@@ -25,6 +40,7 @@ public class ProjectServiceImpl implements ProjectService {
      * @return
      */
     @Override
+    @Transactional
     public boolean saveProject(Mono<ProjectDto> monoProjectDto) {
         ProjectDto projectDto = monoProjectDto.block();
 
@@ -35,7 +51,20 @@ public class ProjectServiceImpl implements ProjectService {
         projectEntity.setRegisteredDate(Timestamp.valueOf(LocalDateTime.now()));
 
         try {
-            projectEntityRepository.save(projectEntity);
+            // 프로젝트 생성
+            ProjectEntity saveProjectEntity = projectEntityRepository.save(projectEntity);
+
+            if(!Objects.isNull(saveProjectEntity)) {
+
+                // 프로젝트와 사용자 연동
+                List<UserEntity> userEntityList = userEntityRepository.findByIdxIn(projectDto.getUsers().stream().map(user -> user.getKey()).collect(Collectors.toList()));
+                userEntityList.forEach(user -> {
+                    UserToProjectEntity userToProjectEntity = new UserToProjectEntity();
+                    userToProjectEntity.setUserIdx(user.getIdx());
+                    userToProjectEntity.setProjectIdx(saveProjectEntity.getIdx());
+                    userToProjectEntityRepository.save(userToProjectEntity);
+                });
+            }
 
             return true;
         } catch (Exception e) {

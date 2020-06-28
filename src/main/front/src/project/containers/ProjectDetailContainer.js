@@ -11,8 +11,8 @@ import { store } from '../../common/reducers/store/store';
 const ProjectDetailContainer = (props) => {
 
     let handleChange = {
-        value : "",
-        data: "",
+        value: [],
+        data: [],
         fetching: false,
     };
 
@@ -41,17 +41,41 @@ const ProjectDetailContainer = (props) => {
     }
 
 
-    // const debounceProjectInUsersAction = debounce(this.projectInUsersAction, 800);
-
-
+    /**
+     * 프로젝트에 권한 부여할 사용자 검색
+     * @param {*} value 
+     */
     const projectInUsersAction = value => {
-        console.log("projectInUsersAction value", value);
+        setProjectUsersHandleChange({
+            data: [],
+            fetching: true
+        });
+
         service.projectInUsersAction(globalStore.state.token, value)
         .then(response => {
-console.log(response);
+            if (response.data.length > 0) {
+                setProjectUsersHandleChange({
+                    data: response.data,
+                    fetching: false
+                });
+            } else {
+                setProjectUsersHandleChange({
+                    data: [],
+                    fetching: false
+                });
+            }
         })
         .catch(error => {
             console.log("error", error);
+        });
+    }
+
+
+    const setProjectUsersHandleChangeInit = (value) => {
+        setProjectUsersHandleChange({
+            value: value,
+            data: [],
+            fetching: false,
         });
     }
 
@@ -61,6 +85,7 @@ console.log(response);
      * @param {*} data 
      */
     const projectCreateAction = data => {
+
         service.projectCreateAction(data, globalStore.state.token)
         .then(response => {
             Modal.success({
@@ -79,12 +104,14 @@ console.log(response);
     return (
         <LayoutContainer tabIndex={props.tabIndex}>
             <ProjectDetailComponent 
-            onProjectCodeCheckAction={projectCodeCheckAction}
-            onProjectInUsersAction={debounce(projectInUsersAction, 800)}
-            projectUsersHandleChange={projectUsersHandleChange}
-            onProjectCreateAction={projectCreateAction}
-            projectCodeOverlapCheck={projectCodeOverlapCheck}
-            globalStore={globalStore} />
+                onProjectCodeCheckAction={projectCodeCheckAction}
+                onProjectInUsersAction={debounce(projectInUsersAction, 300)}
+                onProjectUsersHandleChangeInit={setProjectUsersHandleChangeInit}
+                projectUsersHandleChange={projectUsersHandleChange}
+                onProjectCreateAction={projectCreateAction}
+                projectCodeOverlapCheck={projectCodeOverlapCheck}
+                globalStore={globalStore}
+            />
         </LayoutContainer>
     );
 }

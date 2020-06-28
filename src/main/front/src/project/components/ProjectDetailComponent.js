@@ -48,10 +48,11 @@ const inputValidateStatusTag = (onProjectCodeCheckAction, projectCodeOverlapChec
 );
 
 
-const ProjectDetailComponent = (props, { history }) => {
+const ProjectDetailComponent = (props) => {
 
     const { onProjectCodeCheckAction,
             onProjectInUsersAction,
+            onProjectUsersHandleChangeInit,
             projectUsersHandleChange,
             onProjectCreateAction,
             projectCodeOverlapCheck } = props;
@@ -71,12 +72,6 @@ const ProjectDetailComponent = (props, { history }) => {
             offset: 17
         },
     };
-
-    //TODO 나중에 API류 목록을 가져오는 방식으로 변경해야됨
-    const children = [];
-    for (let i = 10; i < 36; i++) {
-        children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-    }
 
     const onFinish = values => {
         if(projectCodeOverlapCheck === "success") {
@@ -130,16 +125,19 @@ const ProjectDetailComponent = (props, { history }) => {
                     <Select 
                         mode="multiple"
                         labelInValue
+                        value={projectUsersHandleChange.value}
+                        placeholder="프로젝트 참여 사용자를 선택하세요."
+                        // notFoundContent={projectUsersHandleChange.fetching ? <Spin size="small" /> : projectUsersHandleChange.data.length > 0 ? null : <div><FileOutlined /></div>}
                         notFoundContent={projectUsersHandleChange.fetching ? <Spin size="small" /> : null}
                         size="large"
+                        filterOption={false}
                         onSearch={onProjectInUsersAction}
+                        onChange={onProjectUsersHandleChangeInit}
+                        style={{ width: '100%' }}
                     >
-                        {/* <OptGroup label="Manager">
-                            {children}
-                        </OptGroup>
-                        <OptGroup label="Engineer">
-                            <Option value="Yiminghe">yiminghe</Option>
-                        </OptGroup> */}
+                        {projectUsersHandleChange.data.map(userInfo => (
+                            <Option key={userInfo.idx}>{userInfo.username}</Option>
+                        ))}
                     </Select>
                 </Form.Item>
 

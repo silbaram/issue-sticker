@@ -1,9 +1,12 @@
 package com.jin.issuesticker.user.models;
 
+import com.jin.issuesticker.common.models.UserToProjectEntity;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -11,26 +14,29 @@ import java.sql.Timestamp;
 @Table(name = "t_user", schema = "issuesticker")
 public class UserEntity {
     @Id @Column(name = "idx") @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long idx;
+    private Long idx;
 
     @Column(name = "id")
-    String id;
+    private String id;
 
     @Column(name = "password")
-    String password;
+    private String password;
 
     @Column(name = "name")
-    String username;
+    private String username;
 
     @Column(name = "email")
-    String email;
+    private String email;
 
     @Column(name = "is_access")
-    int isAccess;
+    private int isAccess;
 
     @Column(name = "registered_date")
-    Timestamp registeredDate;
+    private Timestamp registeredDate;
 
     @Column(name = "modified_date")
-    Timestamp modifiedDate;
+    private Timestamp modifiedDate;
+
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
+    private List<UserToProjectEntity> userToProjectEntityList = new ArrayList<>();
 }

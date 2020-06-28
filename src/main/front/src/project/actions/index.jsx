@@ -29,7 +29,7 @@ export function projectInUsersAction(userToken, value) {
             Authorization: `Bearer ` + userToken,
         },
     };
-console.log(value);
+
     return axios.get('/project/users?value=' + value, { ...defaultOptions });
 }
 
