@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Select, Divider, PageHeader, Space, Spin } from 'antd';
+import { Form, Input, Button, Select, Divider, Space, Spin, Empty } from 'antd';
 import 'antd/dist/antd.css';
 
 
@@ -83,13 +83,6 @@ const ProjectDetailComponent = (props) => {
     return (
         
         <div style={{padding: 10}}>
-            <PageHeader 
-                className="site-page-header"
-                title="프로젝트 생성"
-                subTitle="프로젝트 / 팀원 관리"
-            />
-
-            <Divider />
 
             <Form
                 {...layout}
@@ -127,12 +120,12 @@ const ProjectDetailComponent = (props) => {
                         labelInValue
                         value={projectUsersHandleChange.value}
                         placeholder="프로젝트 참여 사용자를 선택하세요."
-                        // notFoundContent={projectUsersHandleChange.fetching ? <Spin size="small" /> : projectUsersHandleChange.data.length > 0 ? null : <div><FileOutlined /></div>}
-                        notFoundContent={projectUsersHandleChange.fetching ? <Spin size="small" /> : null}
+                        notFoundContent={projectUsersHandleChange.fetching == null ? null : projectUsersHandleChange.fetching ? <Spin size="small" /> : <Empty />}
                         size="large"
                         filterOption={false}
                         onSearch={onProjectInUsersAction}
                         onChange={onProjectUsersHandleChangeInit}
+                        onFocus={() => null}
                         style={{ width: '100%' }}
                     >
                         {projectUsersHandleChange.data.map(userInfo => (

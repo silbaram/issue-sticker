@@ -7,13 +7,16 @@ import debounce from 'lodash/debounce';
 import { store } from '../../common/reducers/store/store';
 
 
-
+/**
+ * 프로젝트 상세
+ * @param {*} props 
+ */
 const ProjectDetailContainer = (props) => {
 
     let handleChange = {
         value: [],
         data: [],
-        fetching: false,
+        fetching: null,
     };
 
     // 스토어 획득
@@ -37,7 +40,7 @@ const ProjectDetailContainer = (props) => {
         })
         .catch(error => {
             console.log("error", error);
-        });;
+        });
     }
 
 
@@ -46,6 +49,10 @@ const ProjectDetailContainer = (props) => {
      * @param {*} value 
      */
     const projectInUsersAction = value => {
+        if (value === "") {
+            return false;
+        }
+
         setProjectUsersHandleChange({
             data: [],
             fetching: true
@@ -75,7 +82,7 @@ const ProjectDetailContainer = (props) => {
         setProjectUsersHandleChange({
             value: value,
             data: [],
-            fetching: false,
+            fetching: null,
         });
     }
 
@@ -102,7 +109,7 @@ const ProjectDetailContainer = (props) => {
 
 
     return (
-        <LayoutContainer tabIndex={props.tabIndex}>
+        <LayoutContainer title="프로젝트 생성" subTitle="프로젝트 / 팀원 관리" tabIndex={props.tabIndex}>
             <ProjectDetailComponent 
                 onProjectCodeCheckAction={projectCodeCheckAction}
                 onProjectInUsersAction={debounce(projectInUsersAction, 300)}
