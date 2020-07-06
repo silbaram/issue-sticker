@@ -34,7 +34,7 @@ const LayoutComponent = ({children, tabIndex}) => {
                 <Content
                     className="site-layout-background"
                     style={{
-                        padding: 0,
+                        padding: 20,
                         margin: '16px 0',
                         minHeight: '500px'
                     }}

@@ -1,5 +1,20 @@
 import axios from 'axios';
 
+/**
+ * 사용자별 프로젝트 리스트 조회
+ * @param {*} userToken 
+ */
+export function userInProjects(userToken) {
+
+    const defaultOptions = {
+        headers: {
+            Authorization: `Bearer ` + userToken,
+        },
+    };
+
+    return axios.get('/projects', { ...defaultOptions });
+}
+
 
 /**
  * 프로젝트 생성시 프로젝트 코드 중복 체크

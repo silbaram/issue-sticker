@@ -1,12 +1,18 @@
 import React from 'react';
 import { Table, Row, Col } from 'antd';
+import styled from 'styled-components';
 
 
 const PorjectListComponent = () => {
 
+    const StyledTable = styled(Table)`
+        box-shadow: 1px 4px 4px #CCCCCC;
+        border: 1px solid #CCCCCC;
+    `;
+
     const columns = [
         {
-            title: '프로젝트 코드',
+            title: '코드',
             dataIndex: 'code'
         },
         {
@@ -40,11 +46,11 @@ const PorjectListComponent = () => {
             <Row>
                 <Col flex="20px" />
                 <Col flex="auto">
-                    <Table 
+                    <StyledTable 
                         columns={columns}
                         dataSource={data}
                         bordered
-                        // title="프로젝트"
+                        title={() => '프로젝트 목록'}
                         size="small"
                     />
                 </Col>

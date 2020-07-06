@@ -16,6 +16,16 @@ public class ProjectRouterFunctional {
 
 
     /**
+     * 사용자 별 프로젝트 검색
+     * @param projectHandlerFunctional
+     * @return
+     */
+    @Bean
+    public RouterFunction<ServerResponse> findUserInProjects(ProjectHandlerFunctional projectHandlerFunctional) {
+        return RouterFunctions.route(GET("/projects"), projectHandlerFunctional::findUserInProjects);
+    }
+
+    /**
      * 프로젝트 생성
      * @param projectHandlerFunctional
      * @return
