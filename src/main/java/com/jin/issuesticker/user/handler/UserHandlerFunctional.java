@@ -1,7 +1,6 @@
 package com.jin.issuesticker.user.handler;
 
 import com.jin.issuesticker.user.dto.ProjectInUserDto;
-import com.jin.issuesticker.user.dto.UserDto;
 import com.jin.issuesticker.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

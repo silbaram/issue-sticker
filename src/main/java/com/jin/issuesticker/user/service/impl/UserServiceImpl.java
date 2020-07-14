@@ -89,6 +89,7 @@ public class UserServiceImpl implements UserService {
         List<String> roleList = new ArrayList<>();
         roleList.add("USER");
         UserDto userDto = UserDto.builder()
+                .idx(userEntity.getIdx())
                 .id(userEntity.getId())
                 .password(userEntity.getPassword())
                 .username(userEntity.getUsername())

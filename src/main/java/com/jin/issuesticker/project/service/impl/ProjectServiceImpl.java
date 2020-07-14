@@ -12,6 +12,7 @@ import com.jin.issuesticker.user.repository.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.sql.Timestamp;
@@ -83,5 +84,18 @@ public class ProjectServiceImpl implements ProjectService {
         Long count = projectEntityRepository.countByProjectCode(projectCode);
 
         return count > 0 ? false : true;
+    }
+
+
+    @Override
+    public Flux<ProjectDto> findByUserIdx(Long userIdx) {
+        List<ProjectEntity> projectEntityList =  projectEntityRepository.findByUserIdx(userIdx);
+
+        List<ProjectDto> projectDtoList = projectEntityList.stream()
+                .map(projectEntity -> ProjectDto.builder().code(projectEntity.getProjectCode()).title(projectEntity.getTitle()).description(projectEntity.getDescription()).build())
+                .collect(Collectors.toList());
+
+
+        return Flux.fromIterable(projectDtoList);
     }
 }

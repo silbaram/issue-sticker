@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
 import reactor.core.publisher.Mono;
 
 
@@ -54,8 +55,6 @@ public class SecurityConfiguration {
         .authenticationEntryPoint((serverWebExchange, e) -> Mono.fromRunnable((() -> serverWebExchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED))))
         .accessDeniedHandler((serverWebExchange, e) -> Mono.fromRunnable((() -> serverWebExchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN))))
 
-//        .and()
-//        .securityContextRepository(NoOpServerSecurityContextRepository.getInstance());
         //.and()
         //.redirectToHttps(redirect -> redirect.httpsRedirectWhen(e -> e.getRequest().getHeaders().containsKey("X-Forwarded-Proto"));
         ;

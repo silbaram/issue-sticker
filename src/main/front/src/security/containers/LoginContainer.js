@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
 import LoginComponent from '../components/LoginComponent';
 import { message } from 'antd';
-
 import * as service from '../actions';
-
 import * as storeAction from "../../common/reducers/action/action"
 import { store } from '../../common/reducers/store/store';
 

@@ -34,8 +34,12 @@ public class JWTUtil {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
-    public String getUsernameFromToken(String token) {
+    public String getUserIdxFromToken(String token) {
         return getAllClaimsFromToken(token).getSubject();
+    }
+
+    public String getUsernameFromToken(String token) {
+        return getAllClaimsFromToken(token).getId();
     }
 
     public Date getExpirationDateFromToken(String token) {
@@ -50,10 +54,10 @@ public class JWTUtil {
     public String generateToken(UserDto user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRoles());
-        return doGenerateToken(claims, user.getUsername());
+        return doGenerateToken(claims, user.getUsername(), user.getIdx());
     }
 
-    private String doGenerateToken(Map<String, Object> claims, String username) {
+    private String doGenerateToken(Map<String, Object> claims, String username, Long userIdx) {
         Long expirationTimeLong = Long.parseLong(expirationTime); //in second
 
         final Date createdDate = new Date();
@@ -61,7 +65,8 @@ public class JWTUtil {
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(username)
+                .setId(username)
+                .setSubject(userIdx.toString())
                 .setIssuedAt(createdDate)
                 .setExpiration(expirationDate)
                 .signWith(key)

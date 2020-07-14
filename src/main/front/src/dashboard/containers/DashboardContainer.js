@@ -4,7 +4,7 @@ import DashboardComponent from '../components/DashboardComponent';
 
 
 const DashboardContainer = ({match}) => {
-console.log("match.params.userId", match.params.userId);
+    
     return (
         <LayoutContainer>
             <DashboardComponent />
