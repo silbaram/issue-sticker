@@ -2,9 +2,11 @@ package com.jin.issuesticker.project.models;
 
 import com.jin.issuesticker.common.models.UserToProjectEntity;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +29,10 @@ public class ProjectEntity {
     private String description;
 
     @Column(name = "registered_date")
-    private Timestamp registeredDate;
+    private LocalDateTime registeredDate;
 
     @Column(name = "modified_date")
-    private Timestamp modifiedDate;
+    private LocalDateTime  modifiedDate;
 
     @OneToMany(mappedBy = "projectEntity", fetch = FetchType.LAZY)
     private List<UserToProjectEntity> userToProjectEntityList = new ArrayList<>();

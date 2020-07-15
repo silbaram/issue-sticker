@@ -49,7 +49,7 @@ public class ProjectServiceImpl implements ProjectService {
         projectEntity.setProjectCode(projectDto.getCode());
         projectEntity.setTitle(projectDto.getTitle());
         projectEntity.setDescription(projectDto.getDescription());
-        projectEntity.setRegisteredDate(Timestamp.valueOf(LocalDateTime.now()));
+        projectEntity.setRegisteredDate(LocalDateTime.now());
 
         try {
             // 프로젝트 생성
@@ -92,7 +92,16 @@ public class ProjectServiceImpl implements ProjectService {
         List<ProjectEntity> projectEntityList =  projectEntityRepository.findByUserIdx(userIdx);
 
         List<ProjectDto> projectDtoList = projectEntityList.stream()
-                .map(projectEntity -> ProjectDto.builder().code(projectEntity.getProjectCode()).title(projectEntity.getTitle()).description(projectEntity.getDescription()).build())
+                .map(projectEntity -> {
+
+//                    projectEntity.getRegisteredDate()
+                    return ProjectDto.builder()
+                            .code(projectEntity.getProjectCode())
+                            .title(projectEntity.getTitle())
+                            .description(projectEntity.getDescription())
+                            .registeredDate(projectEntity.getRegisteredDate())
+                            .build();
+                })
                 .collect(Collectors.toList());
 
 
