@@ -13,6 +13,9 @@ import { store } from '../../common/reducers/store/store';
  */
 const ProjectDetailContainer = (props) => {
 
+    const { match } = props;
+    const { productCode } = match.params;
+
     let handleChange = {
         value: [],
         data: [],

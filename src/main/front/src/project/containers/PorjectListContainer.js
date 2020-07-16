@@ -9,6 +9,7 @@ import { store } from '../../common/reducers/store/store';
  * 프로젝트 목록
  */
 const PorjectListContainer = (props) => {
+    const { history} = props;
 
     const globalStore = useContext(store);
     const [ projectList, setProjectList] = useState([]);
@@ -21,12 +22,12 @@ const PorjectListContainer = (props) => {
         .catch(error => {
             console.log("error", error);
         });
-    }, []);
+    }, [globalStore.state.token]);
 
 
     return (
         <LayoutContainer title="프로젝트 리스트" subTitle="프로젝트 관리" tabIndex={props.tabIndex}>
-            <PorjectListComponent projectList={projectList} />
+            <PorjectListComponent projectList={projectList} history={history} />
         </LayoutContainer>
     );
 }

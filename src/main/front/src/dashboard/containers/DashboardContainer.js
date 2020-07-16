@@ -3,8 +3,7 @@ import LayoutContainer from '../../common/containers/LayoutContainer';
 import DashboardComponent from '../components/DashboardComponent';
 
 
-const DashboardContainer = ({match}) => {
-    
+const DashboardContainer = ( { match }) => {
     return (
         <LayoutContainer>
             <DashboardComponent />
