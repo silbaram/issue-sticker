@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import LayoutContainer from '../../common/containers/LayoutContainer';
 import ProjectDetailComponent from '../components/ProjectDetailComponent';
 import { Modal } from 'antd';
@@ -13,7 +13,7 @@ import { store } from '../../common/reducers/store/store';
  */
 const ProjectDetailContainer = (props) => {
 
-    const { match } = props;
+    const { match, history } = props;
     const { productCode } = match.params;
 
     let handleChange = {
@@ -26,6 +26,19 @@ const ProjectDetailContainer = (props) => {
     const globalStore = useContext(store);
     const [projectCodeOverlapCheck, setProjectCodeOverlapCheck] = useState(""); //회원 중복 체크 여부 상태값 : '', 'error', 'validating'
     const [projectUsersHandleChange, setProjectUsersHandleChange] = useState(handleChange);
+    const [projectDetailData, setProjectDetailData] = useState("");
+
+
+    useEffect(() => {
+        service.projectDetailAction(productCode, globalStore.state.token)
+        .then(response => {
+            setProjectDetailData(response.data);
+        })
+        .catch(error => {
+            console.log("error", error);
+        });
+    }, [productCode, globalStore.state.token]);
+
 
     /**
      *  프로젝트 생성시 프로젝트 코드 중복 체크
@@ -61,7 +74,7 @@ const ProjectDetailContainer = (props) => {
             fetching: true
         });
 
-        service.projectInUsersAction(globalStore.state.token, value)
+        service.projectInUsersAction(value, globalStore.state.token)
         .then(response => {
             if (response.data.length > 0) {
                 setProjectUsersHandleChange({
@@ -121,6 +134,8 @@ const ProjectDetailContainer = (props) => {
                 onProjectCreateAction={projectCreateAction}
                 projectCodeOverlapCheck={projectCodeOverlapCheck}
                 globalStore={globalStore}
+                projectDetailData={projectDetailData}
+                history={history}
             />
         </LayoutContainer>
     );

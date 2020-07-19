@@ -3,6 +3,22 @@ import { Form, Input, Button, Select, Divider, Space, Spin, Empty } from 'antd';
 import 'antd/dist/antd.css';
 
 
+const layout = {
+    labelCol: {
+        span: 6,
+    },
+    wrapperCol: {
+        span: 14,
+    },
+};
+
+const tailLayout = {
+    wrapperCol: {
+        offset: 17
+    },
+};
+
+
 const inputNoValidateStatusTag = (onProjectCodeCheckAction, projectCodeOverlapCheck) => (
     <Form.Item
         label="프로젝트 코드"
@@ -55,23 +71,10 @@ const ProjectDetailComponent = (props) => {
             onProjectUsersHandleChangeInit,
             projectUsersHandleChange,
             onProjectCreateAction,
-            projectCodeOverlapCheck } = props;
+            projectCodeOverlapCheck,
+            history } = props;
     const { Option } = Select
-
-    const layout = {
-        labelCol: {
-            span: 6,
-        },
-        wrapperCol: {
-            span: 14,
-        },
-    };
-
-    const tailLayout = {
-        wrapperCol: {
-            offset: 17
-        },
-    };
+console.log("projectDetailData", props.projectDetailData.title);
 
     const onFinish = values => {
         if(projectCodeOverlapCheck === "success") {
@@ -90,14 +93,22 @@ const ProjectDetailComponent = (props) => {
                 onFinish={onFinish}
             >
 
-                {projectCodeOverlapCheck === "" ? inputNoValidateStatusTag(onProjectCodeCheckAction, projectCodeOverlapCheck) : inputValidateStatusTag(onProjectCodeCheckAction, projectCodeOverlapCheck)}
+                {projectCodeOverlapCheck === "" 
+                ? 
+                inputNoValidateStatusTag(onProjectCodeCheckAction, projectCodeOverlapCheck)
+                :
+                inputValidateStatusTag(onProjectCodeCheckAction, projectCodeOverlapCheck)}
+                
                 <Form.Item
                     label="프로젝트 제목"
                     name="title"
+                    value={props.projectDetailData.title === undefined ? "" : props.projectDetailData.title}
                 >
 
                     <Input 
                         size="large"
+                        type="text"
+                        value={props.projectDetailData.title === undefined ? "" : props.projectDetailData.title}
                     />
                 </Form.Item>
 
@@ -141,7 +152,7 @@ const ProjectDetailComponent = (props) => {
                         <Button type="primary" htmlType="submit">
                         생성
                         </Button>
-                        <Button type="ghost">
+                        <Button type="ghost" onClick={() => history.push("/projects")}>
                         취소
                         </Button>
                     </Space>

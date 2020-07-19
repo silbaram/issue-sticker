@@ -92,19 +92,28 @@ public class ProjectServiceImpl implements ProjectService {
         List<ProjectEntity> projectEntityList =  projectEntityRepository.findByUserIdx(userIdx);
 
         List<ProjectDto> projectDtoList = projectEntityList.stream()
-                .map(projectEntity -> {
-
-//                    projectEntity.getRegisteredDate()
-                    return ProjectDto.builder()
-                            .code(projectEntity.getProjectCode())
-                            .title(projectEntity.getTitle())
-                            .description(projectEntity.getDescription())
-                            .registeredDate(projectEntity.getRegisteredDate())
-                            .build();
-                })
+                .map(projectEntity -> ProjectDto.builder()
+                        .code(projectEntity.getProjectCode())
+                        .title(projectEntity.getTitle())
+                        .description(projectEntity.getDescription())
+                        .registeredDate(projectEntity.getRegisteredDate())
+                        .build())
                 .collect(Collectors.toList());
 
 
         return Flux.fromIterable(projectDtoList);
+    }
+
+
+    @Override
+    public Mono<ProjectDto> findProjectDetail(String code) {
+
+        ProjectEntity projectEntity = projectEntityRepository.findByProjectCode(code);
+
+        return Mono.just(ProjectDto.builder()
+                .title(projectEntity.getTitle())
+                .description(projectEntity.getDescription())
+                .code(projectEntity.getProjectCode())
+                .build());
     }
 }

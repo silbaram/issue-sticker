@@ -6,13 +6,15 @@ import * as storeAction from "../../common/reducers/action/action"
 import { store } from '../../common/reducers/store/store';
 
 
+const topMessage = messageText => {
+    message.error(messageText);
+}
+
+
 const LoginContainer = ({ history }) => {
 
     const globalStore = useContext(store);
     const { dispatch } = globalStore;
-    const topMessage = messageText => {
-        message.error(messageText);
-    }
 
 
     /**

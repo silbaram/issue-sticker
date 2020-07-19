@@ -4,8 +4,6 @@ import com.jin.issuesticker.project.dto.ProjectDto;
 import com.jin.issuesticker.project.models.ProjectEntity;
 import com.jin.issuesticker.project.service.ProjectService;
 import com.jin.issuesticker.security.auth.JWTUtil;
-import com.jin.issuesticker.user.dto.ProjectInUserDto;
-import com.jin.issuesticker.user.dto.UserDto;
 import com.jin.issuesticker.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -87,5 +85,19 @@ public class ProjectHandlerFunctional {
         } else {
             return ServerResponse.ok().body(BodyInserters.fromValue("error"));
         }
+    }
+
+
+    /**
+     * 프로젝트 상세 내용 조회
+     * @param serverRequest
+     * @return
+     */
+    public Mono<ServerResponse> findProjectDetailHandler(ServerRequest serverRequest) {
+        String projectCode = serverRequest.pathVariable("code");
+
+        Mono<ProjectDto> projectDtoMono = projectService.findProjectDetail(projectCode);
+
+        return ServerResponse.ok().body(projectDtoMono, ProjectDto.class);
     }
 }

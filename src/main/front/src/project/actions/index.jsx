@@ -37,7 +37,7 @@ export function projectCodeCheckAction(data, userToken) {
  * 프로젝트 접근 권한 관리를 위한 사용자 검색
  * @param {*} data 
  */
-export function projectInUsersAction(userToken, value) {
+export function projectInUsersAction(value, userToken) {
 
     const defaultOptions = {
         headers: {
@@ -62,4 +62,19 @@ export function projectCreateAction(data, userToken) {
     };
 
     return axios.post('/project', data, { ...defaultOptions });
+}
+
+/**
+ * 프로젝트 상세 내용 요청
+ * @param {*} data 
+ */
+export function projectDetailAction(data, userToken) {
+
+    const defaultOptions = {
+        headers: {
+            Authorization: `Bearer ` + userToken,
+        },
+    };
+
+    return axios.get(`/project/detail/${data}`, { ...defaultOptions });
 }

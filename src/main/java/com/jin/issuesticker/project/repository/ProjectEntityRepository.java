@@ -10,6 +10,7 @@ public interface ProjectEntityRepository extends JpaRepository<ProjectEntity, Lo
     Long countByProjectCode(String projectCode);
 
     @Query("select p from ProjectEntity p inner join p.userToProjectEntityList up where up.userIdx = :userIdx")
-//    @Query("select up.projectEntity from UserToProjectEntity up inner join up.userEntity u where u.idx = :userIdx")
     List<ProjectEntity> findByUserIdx(Long userIdx);
+
+    ProjectEntity findByProjectCode(String projectCode);
 }

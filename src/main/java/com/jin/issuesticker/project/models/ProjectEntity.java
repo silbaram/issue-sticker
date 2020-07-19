@@ -2,10 +2,8 @@ package com.jin.issuesticker.project.models;
 
 import com.jin.issuesticker.common.models.UserToProjectEntity;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,15 @@
 import React, { useEffect, useContext, useState } from 'react';
 import LayoutContainer from '../../common/containers/LayoutContainer';
 import PorjectListComponent from '../components/PorjectListComponent';
+import { message } from 'antd';
 import * as service from '../actions';
 import { store } from '../../common/reducers/store/store';
+
+
+
+const topMessage = messageText => {
+    message.error(messageText);
+}
 
 
 /**
@@ -21,6 +28,7 @@ const PorjectListContainer = (props) => {
         })
         .catch(error => {
             console.log("error", error);
+            topMessage("프로젝트 목록을 가져오는데 실패 하였습니다.");
         });
     }, [globalStore.state.token]);
 

@@ -22,8 +22,10 @@ public class ProjectRouterFunctional {
      */
     @Bean
     public RouterFunction<ServerResponse> findUserInProjects(ProjectHandlerFunctional projectHandlerFunctional) {
+
         return RouterFunctions.route(GET("/projects"), projectHandlerFunctional::findUserInProjects);
     }
+
 
     /**
      * 프로젝트 생성
@@ -46,5 +48,17 @@ public class ProjectRouterFunctional {
     public RouterFunction<ServerResponse> uniqueCodeValidationRouter(ProjectHandlerFunctional projectHandlerFunctional) {
 
         return RouterFunctions.route(GET("/project/validation/{code}"), projectHandlerFunctional::uniqueCodeValidationHandler);
+    }
+
+
+    /**
+     * 프로젝트 상세 내용 요청
+     * @param projectHandlerFunctional
+     * @return
+     */
+    @Bean
+    public RouterFunction<ServerResponse> findProjectDetailRouter(ProjectHandlerFunctional projectHandlerFunctional) {
+
+        return RouterFunctions.route(GET("/project/detail/{code}"), projectHandlerFunctional::findProjectDetailHandler);
     }
 }
