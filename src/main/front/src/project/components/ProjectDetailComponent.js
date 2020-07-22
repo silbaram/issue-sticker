@@ -72,9 +72,16 @@ const ProjectDetailComponent = (props) => {
             projectUsersHandleChange,
             onProjectCreateAction,
             projectCodeOverlapCheck,
+            projectDetailData,
             history } = props;
     const { Option } = Select
-console.log("projectDetailData", props.projectDetailData.title);
+    const [form] = Form.useForm();
+
+
+    form.setFieldsValue({
+        code: projectDetailData.code,
+        title: projectDetailData.title
+    });
 
     const onFinish = values => {
         if(projectCodeOverlapCheck === "success") {
@@ -90,6 +97,7 @@ console.log("projectDetailData", props.projectDetailData.title);
             <Form
                 {...layout}
                 name="projectForm"
+                form={form}
                 onFinish={onFinish}
             >
 
@@ -102,13 +110,12 @@ console.log("projectDetailData", props.projectDetailData.title);
                 <Form.Item
                     label="프로젝트 제목"
                     name="title"
-                    value={props.projectDetailData.title === undefined ? "" : props.projectDetailData.title}
                 >
 
                     <Input 
                         size="large"
                         type="text"
-                        value={props.projectDetailData.title === undefined ? "" : props.projectDetailData.title}
+                        value={props.projectDetailData.title}
                     />
                 </Form.Item>
 

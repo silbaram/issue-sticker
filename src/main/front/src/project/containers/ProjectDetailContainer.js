@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import LayoutContainer from '../../common/containers/LayoutContainer';
 import ProjectDetailComponent from '../components/ProjectDetailComponent';
-import { Modal } from 'antd';
+import { Modal, } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import * as service from '../actions';
 import debounce from 'lodash/debounce';
 import { store } from '../../common/reducers/store/store';
@@ -30,13 +31,16 @@ const ProjectDetailContainer = (props) => {
 
 
     useEffect(() => {
-        service.projectDetailAction(productCode, globalStore.state.token)
-        .then(response => {
-            setProjectDetailData(response.data);
-        })
-        .catch(error => {
-            console.log("error", error);
-        });
+        if (productCode !== "" && productCode !== undefined) {
+            service.projectDetailAction(productCode, globalStore.state.token)
+            .then(response => {
+                setProjectDetailData(response.data);
+            })
+            .catch(error => {
+                console.log("error", error);
+            });
+        }
+        
     }, [productCode, globalStore.state.token]);
 
 
@@ -126,6 +130,10 @@ const ProjectDetailContainer = (props) => {
 
     return (
         <LayoutContainer title="프로젝트 생성" subTitle="프로젝트 / 팀원 관리" tabIndex={props.tabIndex}>
+
+            {productCode !== "" && productCode !== undefined && projectDetailData === "" ?
+            <LoadingOutlined spin />
+            :
             <ProjectDetailComponent 
                 onProjectCodeCheckAction={projectCodeCheckAction}
                 onProjectInUsersAction={debounce(projectInUsersAction, 300)}
@@ -137,6 +145,7 @@ const ProjectDetailContainer = (props) => {
                 projectDetailData={projectDetailData}
                 history={history}
             />
+            }
         </LayoutContainer>
     );
 }
