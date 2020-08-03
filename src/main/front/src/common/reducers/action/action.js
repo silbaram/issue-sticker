@@ -1,0 +1,3 @@
+export const TOKEN_RESET = 'TOKEN_RESET';
+export const SET_LOGIN_TOKEN = 'SET_LOGIN_TOKEN';
+export const SET_LOGOUT_TOKEN = 'SET_LOGOUT_TOKEN';
