@@ -1,13 +1,13 @@
-package com.jin.issuesticker.common.models;
+package com.jin.issuesticker.user.models;
 
 import com.jin.issuesticker.project.models.ProjectEntity;
-import com.jin.issuesticker.user.models.UserEntity;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 
-@Data
+@Getter @Setter
 @Entity
 @Table(name = "t_user_to_project", schema = "issuesticker")
 @IdClass(UserToProjectEntityPK.class)

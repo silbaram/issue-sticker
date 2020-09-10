@@ -2,6 +2,7 @@ package com.jin.issuesticker.config.security;
 
 import com.jin.issuesticker.security.auth.AuthenticationManager;
 import com.jin.issuesticker.security.auth.SecurityContextRepository;
+import com.jin.issuesticker.user.enumcode.RoleCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -47,6 +48,7 @@ public class SecurityConfiguration {
         .authorizeExchange()
         .pathMatchers(resources).permitAll()
         .pathMatchers("/security/**").permitAll()
+        .pathMatchers("/project/**").hasAuthority(RoleCodeEnum.ROLE_USER.name())
         .anyExchange().authenticated();
 
         http

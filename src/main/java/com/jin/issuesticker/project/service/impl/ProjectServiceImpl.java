@@ -1,8 +1,7 @@
 package com.jin.issuesticker.project.service.impl;
 
-import com.jin.issuesticker.common.models.UserToProjectEntity;
-import com.jin.issuesticker.common.models.UserToProjectEntityPK;
-import com.jin.issuesticker.common.repository.UserToProjectEntityRepository;
+import com.jin.issuesticker.user.models.UserToProjectEntity;
+import com.jin.issuesticker.user.repository.UserToProjectEntityRepository;
 import com.jin.issuesticker.project.dto.ProjectDto;
 import com.jin.issuesticker.project.models.ProjectEntity;
 import com.jin.issuesticker.project.repository.ProjectEntityRepository;
@@ -15,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;

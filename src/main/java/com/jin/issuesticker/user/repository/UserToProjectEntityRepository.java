@@ -1,7 +1,7 @@
-package com.jin.issuesticker.common.repository;
+package com.jin.issuesticker.user.repository;
 
-import com.jin.issuesticker.common.models.UserToProjectEntity;
-import com.jin.issuesticker.common.models.UserToProjectEntityPK;
+import com.jin.issuesticker.user.models.UserToProjectEntity;
+import com.jin.issuesticker.user.models.UserToProjectEntityPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

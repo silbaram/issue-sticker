@@ -1,7 +1,8 @@
 package com.jin.issuesticker.project.models;
 
-import com.jin.issuesticker.common.models.UserToProjectEntity;
-import lombok.Data;
+import com.jin.issuesticker.user.models.UserToProjectEntity;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Data
+@Getter @Setter
 @Entity
 @Table(name = "t_project", schema = "issuesticker")
 public class ProjectEntity {

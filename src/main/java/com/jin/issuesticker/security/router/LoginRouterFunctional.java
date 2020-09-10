@@ -20,7 +20,7 @@ public class LoginRouterFunctional {
 
 
     /**
-     * 회원로그인, 가입 페이지
+     * 회원 로그인, 가입 페이지
      * @param html
      * @return
      */
@@ -39,6 +39,7 @@ public class LoginRouterFunctional {
      */
     @Bean
     public RouterFunction<ServerResponse> loginRouter(LoginHandlerFunctional loginHandlerFunctional) {
+
         return RouterFunctions.route(POST("/security/login"), loginHandlerFunctional::loginHandler);
     }
 }

@@ -33,4 +33,6 @@ build/
 .mvn
 
 ### front ###
-/front/
+front/
+src/main/front/build/
+src/main/front/node_modules

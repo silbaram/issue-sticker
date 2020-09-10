@@ -2,6 +2,8 @@ package com.jin.issuesticker.user.repository;
 
 import com.jin.issuesticker.user.models.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -26,7 +28,8 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
      * @param isAccess
      * @return
      */
-    UserEntity findByIdAndIsAccess(String id, int isAccess);
+    @Query(value = "select u from UserEntity u join fetch u.userToRoleEntityList r join fetch r.roleEntity where u.id = :id and u.isAccess = :isAccess")
+    UserEntity findByIdAndIsAccess(@Param(value = "id") String id, @Param(value = "isAccess") int isAccess);
 
     /**
      * 아이디 또는 사용자 이름으로 user 정보 검색

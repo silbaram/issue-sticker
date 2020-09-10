@@ -12,7 +12,7 @@ export function userInProjects(userToken) {
         },
     };
 
-    return axios.get('/projects', { ...defaultOptions });
+    return axios.get('/project/in/user', { ...defaultOptions });
 }
 
 

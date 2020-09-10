@@ -1,25 +1,3 @@
--- 데이터베이스 생성
-CREATE DATABASE issuesticker DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-
--- 개발 계정 추가
-create user devlop@localhost identified by '1234';
-create user devlop@% identified by '1234';
-
--- 모든 권한 추가
-grant all privileges on issuesticker.* to 'devlop'@'localhost' identified by '1234';
-grant all privileges on issuesticker.* to 'devlop'@'%' identified by '1234';
-
-
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
--- -----------------------------------------------------
--- Schema issuesticker
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `issuesticker` DEFAULT CHARACTER SET utf8 ;
-USE `issuesticker`;
-
 -- -----------------------------------------------------
 -- Table `issuesticker`.`t_user`
 -- -----------------------------------------------------
@@ -33,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `issuesticker`.`t_user` (
   `registered_date` DATETIME NULL COMMENT '등록일자',
   `modified_date` DATETIME NULL COMMENT '변경일자',
   PRIMARY KEY (`idx`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_unique` (`id` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '회원 테이블';
@@ -50,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `issuesticker`.`t_project` (
   `registered_date` DATETIME NULL COMMENT '등록일자',
   `modified_date` DATETIME NULL COMMENT '변경일자',
   PRIMARY KEY (`idx`),
-  UNIQUE INDEX `key_UNIQUE` (`project_code` ASC))
+  UNIQUE INDEX `project_code_unique` (`project_code` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '프로젝트 테이블';
@@ -62,15 +40,15 @@ COMMENT = '프로젝트 테이블';
 CREATE TABLE IF NOT EXISTS `issuesticker`.`t_user_to_project` (
   `user_idx` INT(11) NOT NULL COMMENT '회원 테이블 외래키',
   `project_idx` INT(11) NOT NULL COMMENT '프로젝트 테이블 외래키',
-  INDEX `fk_user_idx` (`user_idx` ASC),
-  INDEX `fk_project_idx` (`project_idx` ASC),
+  INDEX `fk_utp_user_idx` (`user_idx` ASC),
+  INDEX `fk_utp_project_idx` (`project_idx` ASC),
   PRIMARY KEY (`user_idx`, `project_idx`),
-  CONSTRAINT `fk_user`
+  CONSTRAINT `fk_utp_user`
     FOREIGN KEY (`user_idx`)
     REFERENCES `issuesticker`.`t_user` (`idx`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_project`
+  CONSTRAINT `fk_utp_project`
     FOREIGN KEY (`project_idx`)
     REFERENCES `issuesticker`.`t_project` (`idx`)
     ON DELETE CASCADE
@@ -104,15 +82,15 @@ COMMENT = '프로젝트 배포 타입 테이블';
 CREATE TABLE IF NOT EXISTS `issuesticker`.`t_project_to_deployment_type` (
   `project_idx` INT(11) NOT NULL COMMENT '프로젝트 테이블 외래키',
   `deployment_type_idx` INT(11) NOT NULL COMMENT '프로젝트 배포 타입 테이블 외래키',
-  INDEX `fk_project_idx` (`project_idx` ASC),
-  INDEX `fk_deployment_type_idx` (`deployment_type_idx` ASC),
+  INDEX `fk_ptd_project_idx` (`project_idx` ASC),
+  INDEX `fk_ptd_deployment_type_idx` (`deployment_type_idx` ASC),
   PRIMARY KEY (`project_idx`, `deployment_type_idx`),
-  CONSTRAINT `fk_project`
+  CONSTRAINT `fk_ptd_project`
     FOREIGN KEY (`project_idx`)
     REFERENCES `issuesticker`.`t_project` (`idx`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_deployment_type`
+  CONSTRAINT `fk_ptd_deployment_type`
     FOREIGN KEY (`deployment_type_idx`)
     REFERENCES `issuesticker`.`t_deployment_type` (`idx`)
     ON DELETE CASCADE
@@ -256,15 +234,15 @@ COMMENT = '이슈 스티커 테이블';
 CREATE TABLE IF NOT EXISTS `issuesticker`.`t_deployment to_issue_sticker` (
   `deployment_idx` INT(11) NOT NULL COMMENT '프로젝트 배포 테이블 외래키',
   `issue_sticker_idx` INT(11) NOT NULL COMMENT '이슈 스티커 테이블 외래키',
-  INDEX `fk_deployment_idx` (`deployment_idx` ASC),
-  INDEX `fk_issue_sticker_idx` (`issue_sticker_idx` ASC),
+  INDEX `fk_dti_deployment_idx` (`deployment_idx` ASC),
+  INDEX `fk_dti_issue_sticker_idx` (`issue_sticker_idx` ASC),
   PRIMARY KEY (`deployment_idx`, `issue_sticker_idx`),
-  CONSTRAINT `fk_deployment`
+  CONSTRAINT `fk_dti_deployment`
     FOREIGN KEY (`deployment_idx`)
     REFERENCES `issuesticker`.`t_deployment` (`idx`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_issue_sticker`
+  CONSTRAINT `fk_dti_issue_sticker`
     FOREIGN KEY (`issue_sticker_idx`)
     REFERENCES `issuesticker`.`t_issue_sticker` (`idx`)
     ON DELETE CASCADE
@@ -286,26 +264,20 @@ CREATE TABLE IF NOT EXISTS `issuesticker`.`t_role` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `issuesticker`.`t_user_to_role` (
   `user_idx` INT(11) NOT NULL COMMENT '회원 테이블 외래키',
-  `rolet_idx` INT(11) NOT NULL COMMENT '프로젝트 테이블 외래키',
-  INDEX `fk_user_idx` (`user_idx` ASC),
-  INDEX `fk_role_idx` (`rolet_idx` ASC),
-  PRIMARY KEY (`user_idx`, `rolet_idx`),
-  CONSTRAINT `fk_user`
+  `role_idx` INT(11) NOT NULL COMMENT '프로젝트 테이블 외래키',
+  INDEX `fk_utr_user_idx` (`user_idx` ASC),
+  INDEX `fk_utr_role_idx` (`role_idx` ASC),
+  PRIMARY KEY (`user_idx`, `role_idx`),
+  CONSTRAINT `fk_utr_user`
     FOREIGN KEY (`user_idx`)
     REFERENCES `issuesticker`.`t_user` (`idx`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_role`
-    FOREIGN KEY (`rolet_idx`)
+  CONSTRAINT `fk_utr_role`
+    FOREIGN KEY (`role_idx`)
     REFERENCES `issuesticker`.`t_role` (`idx`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '회원, 프로젝트 N:M 매핑 테이블';
-
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

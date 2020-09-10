@@ -23,7 +23,7 @@ public class ProjectRouterFunctional {
     @Bean
     public RouterFunction<ServerResponse> findUserInProjects(ProjectHandlerFunctional projectHandlerFunctional) {
 
-        return RouterFunctions.route(GET("/projects"), projectHandlerFunctional::findUserInProjects);
+        return RouterFunctions.route(GET("/project/in/user"), projectHandlerFunctional::findUserInProjects);
     }
 
 

@@ -1,4 +1,4 @@
-package com.jin.issuesticker.common.models;
+package com.jin.issuesticker.user.models;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
